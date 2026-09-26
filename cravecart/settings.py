@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'anymail',
     'delivery',
 
 ]
@@ -146,22 +147,33 @@ STORAGES = {
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
-MAILERS = {
-    "default": {
-        "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
-
-        "OPTIONS": {
-            "host": "smtp.gmail.com",
-            "port": 587,
-            "use_tls": True,
-            "username": os.environ.get("EMAIL_HOST_USER"),
-            "password": os.environ.get("EMAIL_HOST_PASSWORD"),
-
-    
+if os.environ.get("RENDER") == "true":
+    MAILERS = {
+        "default": {
+            "BACKEND": "anymail.backends.resend.EmailBackend",
+            "OPTIONS": {
+                "api_key": os.environ.get("RESEND_API_KEY"),
+            },
         },
-    },
-}
+    }
 
+    DEFAULT_FROM_EMAIL = "onboarding@resend.dev"
+
+else:
+    MAILERS = {
+        "default": {
+            "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+            "OPTIONS": {
+                "host": "smtp.gmail.com",
+                "port": 587,
+                "use_tls": True,
+                "username": os.environ.get("EMAIL_HOST_USER"),
+                "password": os.environ.get("EMAIL_HOST_PASSWORD"),
+            },
+        },
+    }
+
+    DEFAULT_FROM_EMAIL = os.environ.get("EMAIL_HOST_USER")
 
 
 RAZORPAY_KEY_ID = os.environ.get("RAZORPAY_KEY_ID")
