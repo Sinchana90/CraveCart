@@ -1,4 +1,6 @@
 import random
+import os
+from mailjet_rest import Client
 
 from django.conf import settings
 from decimal import Decimal
@@ -16,6 +18,59 @@ from django.db.models import Exists, OuterRef
 from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import get_object_or_404
 from .models import Address, Cart, CartItem, Customer, Favorite, Item, Order, OrderItem, Restaurant
+
+def send_otp_email(subject, message, recipient):
+    if os.environ.get("RENDER") == "true":
+        api_key = os.environ.get("MAILJET_API_KEY")
+        api_secret = os.environ.get("MAILJET_SECRET_KEY")
+        sender_email = os.environ.get(
+            "MAILJET_SENDER_EMAIL",
+            "cravecart001@gmail.com"
+        )
+
+        if not api_key or not api_secret:
+            raise RuntimeError("Mailjet API credentials are not configured.")
+
+        mailjet = Client(
+            auth=(api_key, api_secret),
+            version="v3.1"
+        )
+
+        data = {
+            "Messages": [
+                {
+                    "From": {
+                        "Email": sender_email,
+                        "Name": "CraveCart"
+                    },
+                    "To": [
+                        {
+                            "Email": recipient
+                        }
+                    ],
+                    "Subject": subject,
+                    "TextPart": message
+                }
+            ]
+        }
+
+        result = mailjet.send.create(data=data)
+
+        if result.status_code not in (200, 201):
+            raise RuntimeError(
+                f"Mailjet email failed: {result.status_code} "
+                f"{result.text}"
+            )
+
+        return True
+
+    # Keep Gmail SMTP for local development
+    return send_mail(
+        subject,
+        message,
+        None,
+        [recipient],
+    )
 
 def index(request):
     return render(request, 'delivery/index.html')
@@ -72,12 +127,11 @@ def signup(request):
         ).isoformat()
 
         # Send OTP
-        send_mail(
+        send_otp_email(
             'CraveCart Email Verification',
             f'Your CraveCart verification OTP is: {otp}\n\n'
             'This OTP is valid for 5 minutes.',
-            None,
-            [email],
+            email,
         )
 
         messages.success(
@@ -228,14 +282,12 @@ def resend_otp(request):
     ).isoformat()
 
     # Send new OTP
-    send_mail(
-        'CraveCart Email Verification',
-        f'Your new CraveCart verification OTP is: {otp}\n\n'
-        'This OTP is valid for 5 minutes.',
-        None,
-        [email],
-    )
-
+    send_otp_email(
+    'CraveCart Email Verification',
+    f'Your new CraveCart verification OTP is: {otp}\n\n'
+    'This OTP is valid for 5 minutes.',
+    email,
+)
     # Return to OTP page
     return redirect('verify_otp')
 
@@ -319,12 +371,11 @@ def forgot_password(request):
         ).isoformat()
 
         # Send OTP
-        send_mail(
+        send_otp_email(
             'CraveCart Password Reset OTP',
-            f'Your CraveCart password reset OTP is: {otp}\n\n'
+             f'Your CraveCart password reset OTP is: {otp}\n\n'
             'This OTP is valid for 5 minutes.',
-            None,
-            [email],
+            email,
         )
 
         messages.success(
