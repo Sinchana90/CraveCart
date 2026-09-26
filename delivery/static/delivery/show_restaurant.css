@@ -1,0 +1,838 @@
+/* =========================
+   GLOBAL
+   ========================= */
+
+:root {
+    --black: #090909;
+    --black-soft: #121212;
+    --card: #18191B;
+    --card-light: #1D1E21;
+
+    --gold-dark: #8F6B24;
+    --gold: #C7A24A;
+    --gold-light: #F3D27A;
+    --gold-bright: #FFE8A8;
+
+    --cream: #E8DDC8;
+    --text: #F0E8D9;
+    --text-soft: #A9A39A;
+    --text-faint: #706B62;
+
+    --line: #3A342B;
+
+    --brown: #291912;
+    --brown-light: #524433;
+
+    --green: #4FBE83;
+    --green-soft: #173325;
+
+    --red: #E06A5C;
+    --red-soft: #3A1414;
+
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+
+/* =========================
+   RESET
+   ========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================
+   PAGE
+   ========================= */
+
+body {
+    min-height: 100vh;
+
+    background: var(--black);
+
+    color: var(--text);
+
+    font-family: var(--font-body);
+
+    -webkit-font-smoothing: antialiased;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+   ========================= */
+
+.container {
+    width: min(1200px, 94%);
+
+    margin: 36px auto 60px;
+}
+
+
+/* =========================
+   PAGE HEAD
+   ========================= */
+
+.page-head {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 22px;
+}
+
+.page-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #8F6B24 0%,
+        #C7A24A 35%,
+        #F3D27A 50%,
+        #C7A24A 70%,
+        #8F6B24 100%
+    );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.30),
+        0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+.page-icon svg {
+    width: 21px;
+    height: 21px;
+
+    stroke: #090909;
+
+    fill: none;
+
+    stroke-width: 1.8;
+}
+
+.page-head h1 {
+    font-family: var(--font-display);
+
+    font-weight: 600;
+
+    font-size: 26px;
+
+    color: var(--cream);
+}
+
+.back-link {
+    font-size: 12.5px;
+
+    color: var(--text-soft);
+
+    text-decoration: none;
+
+    margin-left: auto;
+
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: var(--gold-light);
+}
+
+
+/* =========================
+   SEARCH SECTION
+   ========================= */
+
+.search-section {
+    background: var(--card);
+
+    border: 1px solid var(--line);
+
+    border-radius: 16px;
+
+    padding: 16px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 10px 26px rgba(0, 0, 0, 0.28);
+}
+
+.search-section form {
+    display: flex;
+
+    gap: 10px;
+
+    align-items: center;
+}
+
+.search-section input,
+.search-section select {
+    padding: 11px 13px;
+
+    border: 1px solid var(--line);
+
+    border-radius: 10px;
+
+    background: var(--black-soft);
+
+    color: var(--cream);
+
+    font-family: var(--font-body);
+
+    font-size: 13.5px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.search-section input {
+    flex: 1;
+}
+
+.search-section input::placeholder {
+    color: var(--text-faint);
+}
+
+.search-section input:focus,
+.search-section select:focus {
+    border-color: var(--gold-light);
+
+    box-shadow:
+        0 0 0 3px rgba(243, 210, 122, 0.10);
+
+    background: #181818;
+}
+
+.search-section select {
+    cursor: pointer;
+}
+
+
+/* =========================
+   SEARCH BUTTON
+   ========================= */
+
+.search-section button {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 11px 18px;
+
+    border: 1px solid var(--gold-light);
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        135deg,
+        #8F6B24 0%,
+        #C7A24A 25%,
+        #F3D27A 50%,
+        #C7A24A 75%,
+        #8F6B24 100%
+    );
+
+    color: #090909;
+
+    font-weight: 700;
+
+    font-size: 13px;
+
+    font-family: var(--font-body);
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.30),
+        0 7px 18px rgba(0, 0, 0, 0.30);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.search-section button:hover {
+    background: linear-gradient(
+        135deg,
+        #A77C28 0%,
+        #D9B95C 25%,
+        #FFE39A 50%,
+        #D9B95C 75%,
+        #A77C28 100%
+    );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.40),
+        inset 0 1px 0 rgba(255, 255, 255, 0.40);
+}
+
+.search-section button svg {
+    width: 15px;
+    height: 15px;
+
+    stroke: #090909;
+
+    fill: none;
+
+    stroke-width: 2;
+}
+
+
+/* =========================
+   CLEAR LINK
+   ========================= */
+
+.clear-link {
+    font-size: 13px;
+
+    color: var(--text-soft);
+
+    text-decoration: underline;
+
+    white-space: nowrap;
+
+    transition: color 0.2s ease;
+}
+
+.clear-link:hover {
+    color: var(--gold-light);
+}
+
+
+/* =========================
+   TABLE WRAPPER
+   ========================= */
+
+.table-wrapper {
+    overflow-x: auto;
+
+    border-radius: 18px;
+}
+
+
+/* =========================
+   TABLE
+   ========================= */
+
+table {
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+
+    background: var(--card);
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--line);
+
+    box-shadow:
+        0 14px 32px rgba(0, 0, 0, 0.32);
+}
+
+
+/* =========================
+   TABLE HEADER
+   ========================= */
+
+thead {
+    background: #121212;
+}
+
+th {
+    color: var(--gold-light);
+
+    font-size: 11.5px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.05em;
+
+    text-align: left;
+
+    padding: 14px 12px;
+
+    border-bottom: 1px solid var(--line);
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   TABLE BODY
+   ========================= */
+
+td {
+    padding: 14px 12px;
+
+    color: var(--text);
+
+    font-size: 13px;
+
+    vertical-align: middle;
+
+    border-bottom: 1px solid var(--line);
+}
+
+tbody tr {
+    transition:
+        background 0.2s ease;
+}
+
+tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+tbody tr:hover {
+    background: #1D1D1D;
+}
+
+
+/* =========================
+   RESTAURANT IMAGE
+   ========================= */
+
+.restaurant-image {
+    width: 72px;
+    height: 55px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    border: 1px solid var(--line);
+
+    display: block;
+}
+
+
+/* =========================
+   RATING
+   ========================= */
+
+.rating {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    font-weight: 700;
+
+    color: var(--cream);
+}
+
+.star-icon {
+    width: 14px;
+    height: 14px;
+
+    fill: var(--gold-light);
+
+    stroke: none;
+}
+
+
+/* =========================
+   STATUS BADGE
+   ========================= */
+
+.status {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+.status .dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+}
+
+
+/* =========================
+   ACTIVE STATUS
+   ========================= */
+
+.status.active {
+    background: var(--green-soft);
+
+    color: var(--green);
+
+    border: 1px solid rgba(79, 190, 131, 0.15);
+}
+
+.status.active .dot {
+    background: var(--green);
+
+    box-shadow:
+        0 0 7px rgba(79, 190, 131, 0.55);
+}
+
+
+/* =========================
+   INACTIVE STATUS
+   ========================= */
+
+.status.inactive {
+    background: #29261F;
+
+    color: var(--text-soft);
+
+    border: 1px solid #413A2C;
+}
+
+.status.inactive .dot {
+    background: #5A554B;
+}
+
+
+/* =========================
+   SCHEDULE
+   ========================= */
+
+.schedule {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+    color: var(--text-soft);
+
+    font-size: 12px;
+}
+
+.schedule-time {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+.schedule-time svg {
+    width: 12px;
+    height: 12px;
+
+    stroke: var(--text-soft);
+
+    fill: none;
+
+    stroke-width: 2;
+}
+
+
+/* =========================
+   SCHEDULE STATUS
+   ========================= */
+
+.schedule-open,
+.schedule-closed,
+.schedule-unset {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    font-weight: 700;
+
+    font-size: 11.5px;
+
+    margin-top: 2px;
+}
+
+.schedule-open {
+    color: var(--green);
+}
+
+.schedule-open .dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: var(--green);
+
+    box-shadow:
+        0 0 6px rgba(79, 190, 131, 0.45);
+}
+
+.schedule-closed {
+    color: var(--red);
+}
+
+.schedule-closed .dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: var(--red);
+}
+
+.schedule-unset {
+    color: var(--text-soft);
+}
+
+.schedule-unset .dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #4A463C;
+}
+
+
+/* =========================
+   OPERATIONS
+   ========================= */
+
+.operations {
+    display: flex;
+
+    gap: 7px;
+
+    flex-wrap: wrap;
+}
+
+.operations a {
+    display: inline-block;
+
+    text-decoration: none;
+
+    padding: 7px 11px;
+
+    border-radius: 8px;
+
+    font-size: 11.5px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    border: 1px solid transparent;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.operations a:hover {
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   UPDATE / MENU BUTTON
+   ========================= */
+
+.update-btn,
+.menu-btn {
+    background: #22201C;
+
+    color: var(--gold-light);
+
+    border-color: #51452E !important;
+}
+
+.update-btn:hover,
+.menu-btn:hover {
+    background: #2C281F;
+
+    border-color: var(--gold) !important;
+}
+
+
+/* =========================
+   ACTIVATE BUTTON
+   ========================= */
+
+.activate-btn {
+    background: var(--green-soft);
+
+    color: var(--green);
+
+    border-color: rgba(79, 190, 131, 0.18) !important;
+}
+
+.activate-btn:hover {
+    background: #1A4A2E;
+}
+
+
+/* =========================
+   DEACTIVATE BUTTON
+   ========================= */
+
+.deactivate-btn {
+    background: #312817;
+
+    color: var(--gold-light);
+
+    border-color: rgba(199, 162, 74, 0.18) !important;
+}
+
+.deactivate-btn:hover {
+    background: #4A3A18;
+}
+
+
+/* =========================
+   DELETE BUTTON
+   ========================= */
+
+.delete-btn {
+    background: var(--red-soft);
+
+    color: var(--red);
+
+    border-color: rgba(224, 106, 92, 0.18) !important;
+}
+
+.delete-btn:hover {
+    background: #4A1A1A;
+
+    border-color: rgba(224, 106, 92, 0.30) !important;
+}
+
+
+/* =========================
+   EMPTY STATE
+   ========================= */
+
+.empty {
+    text-align: center;
+
+    padding: 40px;
+
+    color: var(--text-soft);
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 700px) {
+
+    .container {
+        width: 96%;
+
+        margin: 22px auto 40px;
+    }
+
+    .search-section form {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .search-section button {
+        justify-content: center;
+    }
+
+    .page-head {
+        flex-wrap: wrap;
+    }
+
+    .back-link {
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+    th,
+    td {
+        padding: 10px 8px;
+    }
+
+    .restaurant-image {
+        width: 62px;
+        height: 48px;
+    }
+
+    .operations {
+        min-width: 150px;
+    }
+}
+
+
+/* =========================
+   SMALL MOBILE
+   ========================= */
+
+@media (max-width: 480px) {
+
+    .container {
+        width: 94%;
+    }
+
+    .page-head h1 {
+        font-size: 22px;
+    }
+
+    .page-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .search-section {
+        padding: 13px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    .operations a {
+        padding: 6px 9px;
+
+        font-size: 10.5px;
+    }
+}

@@ -1,0 +1,478 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - CraveCart</title>
+
+    <link rel="stylesheet" href="{% static 'delivery/profile.css' %}">
+
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            Crave<span>Cart</span>
+        </div>
+
+        <nav class="nav-links">
+
+            <a href="{% url 'customer_home' username %}">
+                Restaurants
+            </a>
+
+            <a href="{% url 'show_cart' username %}">
+                Cart
+            </a>
+
+            <a href="{% url 'show_favorites' username %}">
+                Favorites
+            </a>
+
+            <a href="{% url 'profile' username %}" class="profile-link active">
+                Profile
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ================= PROFILE PAGE ================= -->
+
+    <main class="account-page">
+
+        <div class="account-container">
+
+            <!-- PAGE HEADING -->
+
+            <div class="account-heading">
+
+                <h1>My Account</h1>
+
+                <p>
+                    Manage your profile and saved addresses
+                </p>
+
+            </div>
+
+
+            <!-- ================= PROFILE HEADER ================= -->
+
+            <div class="account-profile-card">
+
+                <div class="account-avatar">
+                    {{ customer.username|first|upper }}
+                </div>
+
+                <div class="account-profile-info">
+
+                    <h2>
+                        {{ customer.username }}
+                    </h2>
+
+                    <p>
+                        {{ customer.email }}
+                    </p>
+
+                </div>
+
+                <a
+                    href="{% url 'edit_profile' username %}"
+                    class="edit-profile-btn"
+                >
+                    Edit Profile
+                </a>
+
+            </div>
+
+
+            <!-- ================= PERSONAL INFORMATION ================= -->
+
+            <section class="account-section">
+
+                <div class="account-section-heading">
+
+                    <h2>Personal Information</h2>
+
+                    <p>
+                        Your account details
+                    </p>
+
+                </div>
+
+
+                <div class="account-info-grid">
+
+                    <div class="account-info-item">
+
+                        <span class="account-info-label">
+                            Username
+                        </span>
+
+                        <strong>
+                            {{ customer.username }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="account-info-item">
+
+                        <span class="account-info-label">
+                            Email
+                        </span>
+
+                        <strong>
+                            {{ customer.email }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="account-info-item">
+
+                        <span class="account-info-label">
+                            Mobile
+                        </span>
+
+                        <strong>
+                            {{ customer.mobile }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="account-info-item">
+
+                        <span class="account-info-label">
+                            Address
+                        </span>
+
+                        <strong>
+                            {{ customer.address }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= SAVED ADDRESSES ================= -->
+
+            <section class="account-section">
+
+                <div class="account-section-heading">
+
+                    <h2>Saved Addresses</h2>
+
+                    <p>
+                        Manage your saved delivery addresses
+                    </p>
+
+                </div>
+
+
+                <div class="saved-addresses">
+
+                    {% for saved_address in addressList %}
+
+                        <div class="address-card">
+
+                            <div class="address-icon">
+
+                                {% if saved_address.label == 'home' %}
+                                    🏠
+
+                                {% elif saved_address.label == 'work' %}
+                                    💼
+
+                                {% else %}
+                                    📍
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="address-content">
+
+                                <strong>
+                                    {{ saved_address.get_label_display }}
+                                </strong>
+
+                                <p>
+                                    {{ saved_address.address }}
+                                </p>
+
+                            </div>
+
+
+                            <div class="address-actions">
+
+                                <a
+                                    href="{% url 'edit_address' username saved_address.id %}"
+                                    class="address-action"
+                                >
+                                    Edit
+                                </a>
+
+
+                                <form
+    method="POST"
+    action="{% url 'delete_address' username saved_address.id %}"
+    class="delete-address-form"
+>
+    {% csrf_token %}
+
+    <button
+        type="button"
+        class="delete-address-btn"
+        onclick="openDeleteModal(this)"
+    >
+        Delete
+    </button>
+</form>
+
+                            </div>
+
+                        </div>
+
+
+                    {% empty %}
+
+                        <div class="no-address">
+
+                            <p>
+                                No saved addresses yet.
+                            </p>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ADD ADDRESS -->
+
+                <a
+                    href="{% url 'add_address' username %}"
+                    class="add-address-btn"
+                >
+                    + Add New Address
+                </a>
+
+            </section>
+
+
+            <!-- ================= ACCOUNT OPTIONS ================= -->
+
+            <section class="account-section">
+
+                <div class="account-section-heading">
+
+                    <h2>Account</h2>
+
+                    <p>
+                        Quick access to your CraveCart account
+                    </p>
+
+                </div>
+
+
+                <div class="account-options">
+
+
+                    <!-- FAVORITES -->
+
+                    <a
+                        href="{% url 'show_favorites' username %}"
+                        class="account-option"
+                    >
+
+                        <span class="option-icon">
+                            ♥
+                        </span>
+
+                        <span>
+
+                            <strong>
+                                Favorites
+                            </strong>
+
+                            <small>
+                                View your favorite restaurants
+                            </small>
+
+                        </span>
+
+                        <span class="option-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <!-- CART -->
+
+                    <a
+                        href="{% url 'show_cart' username %}"
+                        class="account-option"
+                    >
+
+                        <span class="option-icon">
+                            🛒
+                        </span>
+
+                        <span>
+
+                            <strong>
+                                My Cart
+                            </strong>
+
+                            <small>
+                                View items in your cart
+                            </small>
+
+                        </span>
+
+                        <span class="option-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= LOGOUT ================= -->
+
+            <div class="account-logout">
+
+                <a href="{% url 'logout' %}">
+                    Logout
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+        </main>
+
+    <!-- ================= DELETE CONFIRMATION MODAL ================= -->
+
+    <div id="deleteModal" class="delete-modal-overlay">
+
+        <div class="delete-modal">
+
+            <div class="delete-modal-icon">
+                🗑
+            </div>
+
+            <h3>Delete Address?</h3>
+
+            <p>
+                Are you sure you want to delete this saved address?
+                This action cannot be undone.
+            </p>
+
+            <div class="delete-modal-actions">
+
+                <button
+                    type="button"
+                    class="delete-cancel-btn"
+                    onclick="closeDeleteModal()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="delete-confirm-btn"
+                    onclick="confirmDeleteAddress()"
+                >
+                    Delete
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        let deleteFormToSubmit = null;
+
+        function openDeleteModal(button) {
+
+            deleteFormToSubmit = button.closest('.delete-address-form');
+
+            document
+                .getElementById('deleteModal')
+                .classList.add('show');
+        }
+
+        function closeDeleteModal() {
+
+            document
+                .getElementById('deleteModal')
+                .classList.remove('show');
+
+            deleteFormToSubmit = null;
+        }
+
+        function confirmDeleteAddress() {
+
+            if (deleteFormToSubmit) {
+                deleteFormToSubmit.submit();
+            }
+
+        }
+
+        /* Close modal when clicking outside */
+
+        document
+            .getElementById('deleteModal')
+            .addEventListener('click', function(event) {
+
+                if (event.target === this) {
+                    closeDeleteModal();
+                }
+
+            });
+
+        /* Close modal with Escape key */
+
+        document.addEventListener('keydown', function(event) {
+
+            if (event.key === 'Escape') {
+                closeDeleteModal();
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
+
+</body>
+
+</html>

@@ -1,0 +1,1 @@
+https://chatgpt.com/uc/6ab76419-640c-83ea-873c-487c90f6d25aWhat are HTTP status codes?What does 200 mean?What does 201 mean?What does 400 mean?What does 401 mean?What does 403 mean?What does 404 mean?What does 500 mean?

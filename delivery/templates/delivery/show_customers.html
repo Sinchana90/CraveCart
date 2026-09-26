@@ -1,0 +1,178 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customers | CraveCart Admin</title>
+
+    <link rel="stylesheet"
+          href="{% static 'delivery/show_customers.css' %}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <a href="{% url 'admin_home' %}" class="logo">
+            <span class="logo-icon">♜</span>
+            Crave Cart
+        </a>
+
+        <div class="nav-links">
+            <a href="{% url 'admin_home' %}">Dashboard</a>
+
+            <a href="{% url 'open_show_restaurants' %}">
+                Restaurants
+            </a>
+
+            <a href="{% url 'show_customers' %}" class="active">
+                Customers
+            </a>
+        </div>
+
+        <div class="admin-avatar">A</div>
+
+    </nav>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+
+            <div>
+                <p class="eyebrow">ADMIN PANEL</p>
+
+                <h1>Customer Management</h1>
+
+                <p class="subtitle">
+                    View all registered customers on CraveCart.
+                </p>
+            </div>
+
+            <a href="{% url 'admin_home' %}"
+               class="back-btn">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- CUSTOMER STATISTICS -->
+        <section class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">♙</div>
+
+                <div>
+                    <p>Total Registered Customers</p>
+                    <h2>{{ total_customers }}</h2>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CUSTOMER TABLE -->
+        <section class="customer-section">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Registered Customers</h2>
+
+                    <p>
+                        Customer account information
+                    </p>
+                </div>
+
+                <span class="customer-count">
+                    {{ total_customers }} Customers
+                </span>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>Username</th>
+                            <th>Email Address</th>
+                            <th>Mobile Number</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for customer in customers %}
+
+                        <tr>
+
+                            <td>
+                                <span class="customer-id">
+                                    #{{ customer.id }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <div class="customer-profile">
+
+                                    <span class="customer-avatar">
+                                        {{ customer.username|first|upper }}
+                                    </span>
+
+                                    <span>
+                                        {{ customer.username }}
+                                    </span>
+
+                                </div>
+                            </td>
+
+                            <td>{{ customer.email }}</td>
+
+                            <td>{{ customer.mobile }}</td>
+
+                            <td>{{ customer.address }}</td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="5" class="empty-message">
+                                No customers have registered yet.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+        © 2026 CraveCart | Admin Panel
+    </footer>
+
+</body>
+</html>

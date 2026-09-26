@@ -1,0 +1,448 @@
+/* =========================
+   GLOBAL
+   ========================= */
+
+:root {
+    --black: #090909;
+    --black-soft: #121212;
+    --card: #18191B;
+
+    --gold-dark: #8F6B24;
+    --gold: #C7A24A;
+    --gold-light: #F3D27A;
+    --gold-bright: #FFE8A8;
+
+    --cream: #E8DDC8;
+    --text: #F0E8D9;
+    --text-soft: #A9A39A;
+    --text-faint: #706B62;
+
+    --line: #3A342B;
+
+    --brown: #291912;
+
+    --red: #E06A5C;
+    --red-soft: #3A1414;
+
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+
+/* =========================
+   RESET
+   ========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   PAGE
+   ========================= */
+
+body {
+    font-family: var(--font-body);
+
+    background: var(--black);
+
+    color: var(--text);
+
+    min-height: 100vh;
+
+    padding: 36px 20px;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+   ========================= */
+
+.edit-container {
+    width: 100%;
+
+    max-width: 620px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================
+   BACK LINK
+   ========================= */
+
+.back-link {
+    display: inline-block;
+
+    margin-bottom: 18px;
+
+    color: var(--text-soft);
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: var(--gold-light);
+}
+
+
+/* =========================
+   PAGE HEADER
+   ========================= */
+
+.page-header {
+    margin-bottom: 18px;
+}
+
+.page-header h1 {
+    font-family: var(--font-display);
+
+    font-weight: 600;
+
+    font-size: 28px;
+
+    margin-bottom: 6px;
+
+    color: var(--cream);
+}
+
+.page-header p {
+    color: var(--text-soft);
+
+    font-size: 13px;
+}
+
+.page-header strong {
+    color: var(--gold-light);
+}
+
+
+/* =========================
+   ERROR MESSAGE
+   ========================= */
+
+.error {
+    background: var(--red-soft);
+
+    border: 1px solid rgba(224, 106, 92, 0.35);
+
+    color: var(--red);
+
+    padding: 12px 15px;
+
+    border-radius: 11px;
+
+    margin-bottom: 18px;
+
+    font-size: 13px;
+
+    line-height: 1.4;
+}
+
+
+/* =========================
+   FORM
+   ========================= */
+
+form {
+    background: var(--card);
+
+    border: 1px solid var(--line);
+
+    border-radius: 20px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 16px 36px rgba(0, 0, 0, 0.35);
+}
+
+
+/* =========================
+   FORM GROUP
+   ========================= */
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+
+    color: var(--text);
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    margin-bottom: 6px;
+}
+
+
+/* =========================
+   FORM INPUTS
+   ========================= */
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+
+    padding: 11px 12px;
+
+    background: var(--black-soft);
+
+    color: var(--cream);
+
+    border: 1px solid var(--line);
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 13px;
+
+    font-family: var(--font-body);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-faint);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--gold-light);
+
+    box-shadow:
+        0 0 0 3px rgba(243, 210, 122, 0.10);
+
+    background: #151515;
+}
+
+
+/* =========================
+   AUTOFILL
+   ========================= */
+
+.form-group input:-webkit-autofill,
+.form-group input:-webkit-autofill:hover,
+.form-group input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--cream);
+
+    transition:
+        background-color 9999s ease-in-out 0s;
+
+    box-shadow: none;
+}
+
+
+/* =========================
+   TEXTAREA
+   ========================= */
+
+.form-group textarea {
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+
+/* =========================
+   CHECKBOX
+   ========================= */
+
+.checkbox-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 12px;
+}
+
+.checkbox-row input {
+    width: 16px;
+
+    height: 16px;
+
+    accent-color: var(--gold);
+}
+
+.checkbox-row label {
+    color: var(--text-soft);
+
+    font-size: 12px;
+
+    margin-bottom: 0;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   BUTTON ROW
+   ========================= */
+
+.button-row {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 24px;
+}
+
+.button-row button,
+.cancel-btn {
+    flex: 1;
+
+    height: 44px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-align: center;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-family: var(--font-body);
+}
+
+
+/* =========================
+   UPDATE BUTTON
+   ========================= */
+
+.button-row button {
+    border: 1px solid var(--gold-light);
+
+    background: linear-gradient(
+        135deg,
+        #8F6B24 0%,
+        #C7A24A 25%,
+        #F3D27A 50%,
+        #C7A24A 75%,
+        #8F6B24 100%
+    );
+
+    color: #090909;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 9px 20px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.button-row button:hover {
+    background: linear-gradient(
+        135deg,
+        #A77C28 0%,
+        #D9B95C 25%,
+        #FFE39A 50%,
+        #D9B95C 75%,
+        #A77C28 100%
+    );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 13px 26px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.button-row button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================
+   CANCEL BUTTON
+   ========================= */
+
+.cancel-btn {
+    background: #121212;
+
+    color: var(--cream);
+
+    border: 1px solid var(--line);
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.cancel-btn:hover {
+    background: #211D18;
+
+    border-color: #635132;
+
+    color: var(--gold-light);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 26px 16px;
+    }
+
+    form {
+        padding: 23px;
+    }
+
+    .page-header h1 {
+        font-size: 24px;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+
+    .button-row button,
+    .cancel-btn {
+        width: 100%;
+
+        flex: none;
+    }
+}

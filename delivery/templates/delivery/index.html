@@ -1,0 +1,140 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CraveCart - Food Delivery</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;0,900;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'delivery/index.css' %}">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+
+        <div class="logo">
+            Crave<span>Cart</span>
+        </div>
+
+        <div class="nav-links">
+
+            <a href="{% url 'open_signup' %}">
+                Sign Up
+            </a>
+
+            <a href="{% url 'open_signin' %}">
+                Sign In
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <!-- Main White Card -->
+        <div class="hero-content">
+
+            <div class="hero-text">
+
+                <!-- Food Icon -->
+                <div class="food-icon">
+                    🍔
+                </div>
+
+
+                <!-- Heading -->
+                <h1>
+                    Welcome to CraveCart
+                </h1>
+
+
+                <!-- Tagline -->
+                <p class="tagline">
+                    Your hunger mate!
+                </p>
+
+
+                <!-- Description -->
+                <p class="description">
+                    Discover delicious food from your favorite restaurants
+                    and get it delivered straight to your doorstep.
+                    Your favorite meals are just a few clicks away.
+                </p>
+
+
+                <!-- Buttons -->
+                <div class="buttons">
+
+                    <a href="{% url 'open_signup' %}" class="btn signup-btn">
+                        Create Account
+                    </a>
+
+                    <a href="{% url 'open_signin' %}" class="btn signin-btn">
+                        Sign In
+                    </a>
+
+                </div>
+
+
+                <!-- Features -->
+                <div class="features">
+
+                    <div class="feature">
+                        <div class="feature-icon">🍕</div>
+                        <div>
+                            <h3>Delicious Food</h3>
+                            <p>Fresh meals from restaurants</p>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">🚀</div>
+                        <div>
+                            <h3>Fast Delivery</h3>
+                            <p>Delivered to your doorstep</p>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">❤️</div>
+                        <div>
+                            <h3>Your Favorites</h3>
+                            <p>Order what you love</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Food Image -->
+            <div class="hero_image">
+
+                <div class="hero_image-frame">
+                    <img src="{% static 'delivery/images/hero-food.jpg' %}"
+                         alt="Delicious food">
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

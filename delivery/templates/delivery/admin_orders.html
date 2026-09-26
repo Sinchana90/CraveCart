@@ -1,0 +1,320 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Manage Orders - CraveCart</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'delivery/admin_orders.css' %}"
+    >
+
+</head>
+
+<body>
+
+    <div class="page-container">
+
+        <!-- HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <a
+                    href="{% url 'admin_home' %}"
+                    class="back-link"
+                >
+                    ← Admin Dashboard
+                </a>
+
+                <h1>Manage Orders</h1>
+
+                <p>
+                    View and update customer orders.
+                </p>
+
+            </div>
+
+            <div class="order-count">
+                {{ orders|length }} Orders
+            </div>
+
+        </div>
+
+
+        <!-- DJANGO MESSAGES -->
+
+        {% if messages %}
+
+            <div class="messages">
+
+                {% for message in messages %}
+
+                    <div class="message">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- ORDERS -->
+
+        {% if orders %}
+
+            <div class="orders-list">
+
+                {% for order in orders %}
+
+                    <div class="order-card">
+
+                        <!-- ORDER TOP -->
+
+                        <div class="order-top">
+
+                            <div>
+
+                                <span class="order-number">
+                                    Order #{{ order.id }}
+                                </span>
+
+                                <h2>
+                                    {{ order.restaurant.name }}
+                                </h2>
+
+                            </div>
+
+                            <div class="date">
+                                {{ order.created_at|date:"d M Y, h:i A" }}
+                            </div>
+
+                        </div>
+
+
+                        <!-- CUSTOMER -->
+
+                        <div class="customer-section">
+
+                            <div class="detail">
+
+                                <span class="label">
+                                    Customer
+                                </span>
+
+                                <span class="value">
+                                    {{ order.customer.username }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span class="label">
+                                    Payment
+                                </span>
+
+                                <span class="value">
+                                    {{ order.get_payment_method_display }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span class="label">
+                                    Payment Status
+                                </span>
+
+                                <span class="value payment-status">
+                                    {{ order.payment_status }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span class="label">
+                                    Total
+                                </span>
+
+                                <span class="value total">
+                                    ₹{{ order.total_amount }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ORDER ITEMS -->
+
+                        <div class="items-section">
+
+                            <span class="label">
+                                Items
+                            </span>
+
+                            <div class="items">
+
+                                {% for order_item in order.order_items.all %}
+
+                                    <span class="item">
+                                        {{ order_item.item_name }}
+                                        × {{ order_item.quantity }}
+                                    </span>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ADDRESS -->
+
+                        <div class="address-section">
+
+                            <span class="label">
+                                Delivery Address
+                            </span>
+
+                            <span class="address">
+                                {{ order.delivery_address }}
+                            </span>
+
+                        </div>
+
+
+                        <!-- STATUS -->
+
+                        <div class="status-section">
+
+                            <div class="current-status">
+
+                                <span class="label">
+                                    Current Status
+                                </span>
+
+                                <span class="status-badge">
+                                    {{ order.get_status_display }}
+                                </span>
+
+                            </div>
+
+
+                            <form
+                                method="POST"
+                                action="{% url 'update_order_status' order.id %}"
+                                class="status-form"
+                            >
+
+                                {% csrf_token %}
+
+                                <label for="status-{{ order.id }}">
+                                    Update Status
+                                </label>
+
+                                <select
+                                    id="status-{{ order.id }}"
+                                    name="status"
+                                >
+
+                                    <option
+                                        value="placed"
+                                        {% if order.status == 'placed' %}selected{% endif %}
+                                    >
+                                        Placed
+                                    </option>
+
+                                    <option
+                                        value="confirmed"
+                                        {% if order.status == 'confirmed' %}selected{% endif %}
+                                    >
+                                        Confirmed
+                                    </option>
+
+                                    <option
+                                        value="preparing"
+                                        {% if order.status == 'preparing' %}selected{% endif %}
+                                    >
+                                        Preparing
+                                    </option>
+
+                                    <option
+                                        value="out_for_delivery"
+                                        {% if order.status == 'out_for_delivery' %}selected{% endif %}
+                                    >
+                                        Out for Delivery
+                                    </option>
+
+                                    <option
+                                        value="delivered"
+                                        {% if order.status == 'delivered' %}selected{% endif %}
+                                    >
+                                        Delivered
+                                    </option>
+
+                                    <option
+                                        value="cancelled"
+                                        {% if order.status == 'cancelled' %}selected{% endif %}
+                                    >
+                                        Cancelled
+                                    </option>
+
+                                </select>
+
+                                <button type="submit">
+                                    Update Status
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-orders">
+
+                <div class="empty-icon">
+                    📦
+                </div>
+
+                <h2>
+                    No Orders Yet
+                </h2>
+
+                <p>
+                    Customer orders will appear here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+</html>

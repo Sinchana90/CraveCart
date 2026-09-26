@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'delivery/admin_home.css' %}">
+<title>CraveCart Admin Dashboard</title>
+</head>
+<body>
+
+<div class="topnav">
+    <div class="brand">
+        <span class="mark">
+            <svg viewBox="0 0 24 24"><path d="M4 4v16M4 4c4 0 4 4 0 4M20 4v16M20 4c-3 0-4 2-4 6v10"/></svg>
+        </span>
+        <span class="crave">Crave</span><span class="cart">Cart</span>
+    </div>
+    <nav class="links">
+        {% comment %} <a href="#" class="active">Dashboard</a> {% endcomment %}
+        <a href="{% url 'open_show_restaurants' %}">Restaurants</a>
+        <a href="{% url 'show_customers' %}">Customers</a>
+        <a href="{% url 'admin_orders' %}">Orders</a>
+    </nav>
+    <div class="profile">
+        <span class="avatar">{{ request.user.first_name|default:"A"|first|upper }}{{ request.user.last_name|default:""|first|upper }}</span>
+        <a href="{% url 'logout' %}" class="logout-link">Log out</a>
+    </div>
+</div>
+
+<div class="dashboard-container">
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>{{ greeting|default:"Good afternoon" }}, {{ admin_name|default:"Admin" }}</h1>
+            <p>Here's how CraveCart is doing today.</p>
+        </div>
+    </div>
+
+    <!-- STATISTICS -->
+    <div class="stats-container">
+
+        <div class="stat-card">
+            <div class="stat-top">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24"><path d="M4 4v16M4 4c4 0 4 4 0 4M20 4v16M20 4c-3 0-4 2-4 6v10"/></svg>
+                </div>
+                {% if restaurants_delta %}<span class="delta">{{ restaurants_delta }}</span>{% else %}<span class="delta">+1 this month</span>{% endif %}
+            </div>
+            <div class="stat-content">
+                <p>{{ total_restaurants }}</p>
+                <h3>Total restaurants</h3>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-top">
+                <div class="stat-icon accent">
+                    <svg viewBox="0 0 24 24"><path d="M9 3h6v2H9zM7 6h10v14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V6z"/><path d="M9 10h6M9 14h6"/></svg>
+                </div>
+                <span class="delta neutral">No change</span>
+            </div>
+            <div class="stat-content">
+                <p>{{ total_items }}</p>
+                <h3>Total menu items</h3>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-top">
+                <div class="stat-icon brand-light">
+                    <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14.3c2.7.4 5 2.3 5.5 5.7"/></svg>
+                </div>
+                <span class="delta">+8 this week</span>
+            </div>
+            <div class="stat-content">
+                <p>{{ total_customers }}</p>
+                <h3>Total customers</h3>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-top">
+                <div class="stat-icon ok">
+                    <svg viewBox="0 0 24 24"><path d="M4 4v16M4 4c4 0 4 4 0 4M20 4v16M20 4c-3 0-4 2-4 6v10"/></svg>
+                </div>
+                <span class="delta neutral">{{ active_restaurants }} of {{ total_restaurants }}</span>
+            </div>
+            <div class="stat-content">
+                <p>{{ active_restaurants }}</p>
+                <h3>Active restaurants</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ADMIN ACTIONS -->
+    <div class="admin-actions">
+
+        <div class="action-card">
+            <div class="action-icon coral">
+                <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
+            <h2>Add a restaurant</h2>
+            <p>Onboard a new restaurant to the CraveCart delivery platform in a few steps.</p>
+            <div class="action-spacer"></div>
+            <a href="{% url 'open_add_restaurant' %}" class="action-btn">Add new restaurant</a>
+        </div>
+
+        <div class="action-card">
+            <div class="action-icon brand">
+                <svg viewBox="0 0 24 24"><path d="M4 4v16M4 4c4 0 4 4 0 4M20 4v16M20 4c-3 0-4 2-4 6v10"/></svg>
+            </div>
+            <h2>Restaurants</h2>
+            <p>View and manage every restaurant listed on CraveCart.</p>
+            <div class="button-group">
+                <a href="{% url 'open_show_restaurants' %}" class="action-btn">Show restaurants</a>
+            </div>
+
+            <ul class="restaurant-preview">
+                {% for restaurant in recent_restaurants %}
+                <li>
+                    <span class="dot {% if restaurant.is_active %}dot-active{% elif restaurant.is_paused %}dot-paused{% else %}dot-off{% endif %}"></span>
+                    <span class="r-name">{{ restaurant.name }}</span>
+                    <span class="r-status {% if restaurant.is_active %}status-active{% elif restaurant.is_paused %}status-paused{% endif %}">
+                        {% if restaurant.is_active %}Active{% elif restaurant.is_paused %}Paused{% else %}Inactive{% endif %}
+                    </span>
+                </li>
+                {% empty %}
+                <li>
+                    <span class="dot dot-active"></span>
+                    <span class="r-name">Spice Route Kitchen</span>
+                    <span class="r-status status-active">Active</span>
+                </li>
+                <li>
+                    <span class="dot dot-paused"></span>
+                    <span class="r-name">Green Bowl Cafe</span>
+                    <span class="r-status status-active">Active</span>
+                </li>
+                <li>
+                    <span class="dot dot-off"></span>
+                    <span class="r-name">Midnight Tandoor</span>
+                    <span class="r-status status-paused">Paused</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        © 2026 CraveCart &middot; <a href="#">Admin panel</a>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'delivery/show_restaurant.css' %}">
+<title>Restaurant List - CraveCart</title>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="page-head">
+        <span class="page-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4v16M4 4c4 0 4 4 0 4M20 4v16M20 4c-3 0-4 2-4 6v10"/></svg>
+        </span>
+        <div>
+            <h1>Restaurant management</h1>
+            <a href="{% url 'admin_home' %}" class="back-link">&larr; Back to dashboard</a>
+        </div>
+    </div>
+
+    <div class="search-section">
+        <form method="GET" action="{% url 'open_show_restaurants' %}">
+
+            <input type="text" name="search" placeholder="Search restaurant..." value="{{ search }}">
+
+            <select name="status">
+                <option value="all" {% if status == 'all' %}selected{% endif %}>All restaurants</option>
+                <option value="active" {% if status == 'active' %}selected{% endif %}>Active</option>
+                <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>Inactive</option>
+            </select>
+
+            <button type="submit">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                Search
+            </button>
+
+            <a href="{% url 'open_show_restaurants' %}" class="clear-link">Clear</a>
+
+        </form>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Restaurant name</th>
+                    <th>Picture</th>
+                    <th>Cuisine</th>
+                    <th>Rating</th>
+                    <th>Status</th>
+                    <th>Schedule</th>
+                    <th>Operations</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for r in restaurantList %}
+
+                <tr>
+
+                    <td><strong>{{ r.name }}</strong></td>
+
+                    <td>
+                        <img src="{{ r.picture }}" alt="{{ r.name }}" class="restaurant-image">
+                    </td>
+
+                    <td>{{ r.cuisine }}</td>
+
+                    <td>
+                        <span class="rating">
+                            <svg viewBox="0 0 24 24" class="star-icon"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+                            {{ r.rating }}
+                        </span>
+                    </td>
+
+                    <td>
+                        {% if r.is_active %}
+                            <span class="status active"><span class="dot"></span>Active</span>
+                        {% else %}
+                            <span class="status inactive"><span class="dot"></span>Inactive</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if r.opening_time and r.closing_time %}
+                            <div class="schedule">
+                                <div class="schedule-time">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                                    {{ r.opening_time|time:"h:i A" }}
+                                </div>
+                                <div class="schedule-time">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                                    {{ r.closing_time|time:"h:i A" }}
+                                </div>
+
+                                {% if r.schedule_status == "OPEN" %}
+                                    <span class="schedule-open"><span class="dot"></span>Open</span>
+                                {% elif r.schedule_status == "CLOSED" %}
+                                    <span class="schedule-closed"><span class="dot"></span>Closed</span>
+                                {% else %}
+                                    <span class="schedule-unset"><span class="dot"></span>Time not set</span>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <span class="schedule-unset"><span class="dot"></span>Time not set</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <div class="operations">
+
+                            <a href="{% url 'open_update_restaurant' r.id %}" class="update-btn">Update</a>
+
+                            <a href="{% url 'delete_restaurant' r.id %}" class="delete-btn"
+                               onclick="return confirm('Delete {{ r.name }}?');">Delete</a>
+
+                            <a href="{% url 'open_update_menu' r.id %}" class="menu-btn">Menu</a>
+
+                            {% if r.is_active %}
+                                <a href="{% url 'toggle_restaurant_status' r.id %}" class="deactivate-btn"
+                                   onclick="return confirm('Deactivate {{ r.name }}?');">Deactivate</a>
+                            {% else %}
+                                <a href="{% url 'toggle_restaurant_status' r.id %}" class="activate-btn"
+                                   onclick="return confirm('Activate {{ r.name }}?');">Activate</a>
+                            {% endif %}
+
+                        </div>
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="7" class="empty">No restaurants available.</td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

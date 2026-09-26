@@ -1,0 +1,176 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CraveCart - Sign Up</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'delivery/signup.css' %}">
+</head>
+
+<body>
+
+    <div class="bg-panel"></div>
+
+    <div class="card-stack">
+
+        <!-- Photo Card -->
+        <div class="photo-card">
+
+            <img src="{% static 'delivery/images/signup-food.jpg' %}"
+                 alt="Delicious food">
+
+            <div class="photo-card-overlay">
+
+                <h2>
+                    Craving<br>
+                    something great?
+                </h2>
+
+                <p>
+                    Join CraveCart and order from your
+                    favorite nearby restaurants in minutes.
+                </p>
+
+                <div class="dots">
+                    <span class="active"></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Form Card -->
+        <div class="form-card">
+
+            <h1>Create Account</h1>
+
+            <p class="subtitle">
+                Sign up to start ordering with CraveCart
+            </p>
+
+
+            <!-- Error Message -->
+            {% if error %}
+                <div class="error-message" id="errorMessage">
+                      {{ error }}
+                </div>
+            {% endif %}
+
+
+            <form action="{% url 'signup' %}" method="post">
+
+                {% csrf_token %}
+
+
+                <!-- Username -->
+                <div class="field">
+
+                    <label>Username</label>
+
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Enter your username"
+                        value="{{ username|default:'' }}"
+                        required>
+
+                </div>
+
+
+                <!-- Email -->
+                <div class="field">
+
+                    <label>E-mail</label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        value="{{ email|default:'' }}"
+                        required>
+
+                </div>
+
+
+                <!-- Password -->
+                <div class="field">
+
+                    <label>Password</label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Create a password"
+                        required>
+
+                </div>
+
+
+                <!-- Mobile -->
+                <div class="field">
+
+                    <label>Mobile</label>
+
+                    <input
+                        type="text"
+                        name="mobile"
+                        placeholder="Enter your mobile number"
+                        value="{{ mobile|default:'' }}"
+                        required>
+
+                </div>
+
+
+                <!-- Sign Up Button -->
+                <button type="submit" class="signup-btn">
+                    Sign Up
+                </button>
+
+            </form>
+
+
+            <p class="signin-text">
+
+                Already have an account?
+
+                <a href="{% url 'open_signin' %}">
+                    Sign In
+                </a>
+
+            </p>
+
+        </div>
+
+        </div>
+
+    <script>
+        setTimeout(function() {
+            const errorMessage = document.getElementById("errorMessage");
+
+            if (errorMessage) {
+                errorMessage.style.opacity = "0";
+
+                setTimeout(function() {
+                    errorMessage.remove();
+                }, 500);
+            }
+        }, 3000);
+    </script>
+
+
+</body>
+
+</html>

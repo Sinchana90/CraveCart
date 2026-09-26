@@ -1,0 +1,843 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'delivery/customer_home.css' %}">
+
+    <title>Customer Page</title>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="topnav">
+
+        <div class="brand">
+            <span class="mark">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 4v16M4 4c4 0 4 4 0 4M20 4v16M20 4c-3 0-4 2-4 6v10"/>
+                </svg>
+            </span>
+
+            <span class="crave">Crave</span>
+            <span class="cart">Cart</span>
+        </div>
+
+        <nav class="links">
+            <a href="{% url 'customer_home' username %}">
+                Restaurants
+            </a>
+            <a href="{% url 'my_orders' username %}">Orders</a>
+
+            <a href="{% url 'show_cart' username %}">
+                Cart
+            </a>
+
+            <a href="{% url 'show_favorites' username %}">
+                Favorites
+            </a>
+        </nav>
+
+        <div class="profile">
+            <span class="avatar">
+                {{ username|slice:":1"|upper }}
+            </span>
+
+            <a href="{% url 'profile' username %}" class="profile-link">
+               Profile
+            </a>
+        </div>
+
+    </div>
+
+
+    <div class="page">
+
+        <!-- HERO / SEARCH -->
+        <div class="search-hero">
+
+            <h3 class="welcome">
+                Welcome {{ username }}!
+            </h3>
+
+            <p class="subhead">
+                Order food from the best restaurants near you
+            </p>
+
+            <form class="search-bar"
+                  id="searchForm"
+                  action="#"
+                  method="get"
+                  onsubmit="return false;">
+
+                <svg class="search-icon" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="7"/>
+                    <path d="M21 21l-4.3-4.3"/>
+                </svg>
+
+                <input
+                    type="text"
+                    name="q"
+                    id="searchInput"
+                    placeholder="Search for restaurants or cuisines"
+                    autocomplete="off"
+                >
+
+                <button type="submit">
+                    Search
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- CUISINE FILTER CHIPS -->
+<div class="chip-row">
+
+    <span class="chip active" data-cuisine="all">
+        All
+    </span>
+
+    {% regroup restaurantList by cuisine as cuisine_list %}
+
+    {% for group in cuisine_list %}
+
+        <span class="chip"
+              data-cuisine="{{ group.grouper }}">
+            {{ group.grouper }}
+        </span>
+
+    {% endfor %}
+
+</div>
+
+
+<!-- FILTER BUTTON -->
+<div class="filter-button-row">
+    <button type="button" id="openFilters" class="filter-button">
+        ⚙ Filters
+    </button>
+</div>
+
+
+<!-- FILTER PANEL -->
+<div id="filterPanel" class="filter-panel">
+
+    <div class="filter-panel-header">
+        <h3>Filters</h3>
+
+        <button type="button"
+                id="closeFilters"
+                class="filter-close">
+            ✕
+        </button>
+    </div>
+
+
+    <!-- RATING -->
+    <div class="filter-section">
+
+        <span class="filter-section-title">
+            Rating
+        </span>
+
+        <div class="filter-options">
+
+            <span class="rating-chip active"
+                  data-rating="0">
+                All
+            </span>
+
+            <span class="rating-chip"
+                  data-rating="4.5">
+                ⭐ 4.5+
+            </span>
+
+            <span class="rating-chip"
+                  data-rating="4.0">
+                ⭐ 4.0+
+            </span>
+
+            <span class="rating-chip"
+                  data-rating="3.5">
+                ⭐ 3.5+
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- VEGETARIAN -->
+    <div class="filter-section">
+
+        <span class="filter-section-title">
+            Food
+        </span>
+
+        <div class="filter-options">
+
+            <span class="veg-chip active"
+                  data-vegetarian="all">
+                All
+            </span>
+
+            <span class="veg-chip"
+                  data-vegetarian="true">
+                🥬 Vegetarian
+            </span>
+
+        </div>
+
+    </div>
+
+
+        <!-- CATEGORY -->
+    <div class="filter-section">
+
+        <span class="filter-section-title">
+            Category
+        </span>
+
+        <div class="filter-options">
+
+            <span class="category-chip active"
+                  data-category="all">
+                All
+            </span>
+
+            <span class="category-chip"
+                  data-category="starter">
+                Starters
+            </span>
+
+            <span class="category-chip"
+                  data-category="main">
+                Main Course
+            </span>
+
+            <span class="category-chip"
+                  data-category="dessert">
+                Desserts
+            </span>
+
+            <span class="category-chip"
+                  data-category="beverage">
+                Beverages
+            </span>
+
+            <span class="category-chip"
+                  data-category="other">
+                Other
+            </span>
+
+        </div>
+
+    </div>
+
+<!-- PRICE -->
+
+<div class="filter-section">
+
+    <span class="filter-section-title">
+        Price
+    </span>
+
+    <div class="filter-options">
+
+        <span class="price-chip active"
+              data-price="all">
+            All
+        </span>
+
+        <span class="price-chip"
+              data-price="100">
+            Under ₹100
+        </span>
+
+        <span class="price-chip"
+              data-price="200">
+            Under ₹200
+        </span>
+
+        <span class="price-chip"
+              data-price="300">
+            Under ₹300
+        </span>
+
+        <span class="price-chip"
+              data-price="500">
+            Under ₹500
+        </span>
+
+    </div>
+
+</div>
+
+    <!-- BUTTONS -->
+    <div class="filter-actions">
+
+        <button type="button"
+                id="clearFilters"
+                class="clear-filter">
+            Clear All
+        </button>
+
+        <button type="button"
+                id="applyFilters"
+                class="apply-filter">
+            Apply
+        </button>
+
+    </div>
+
+</div>
+
+        <!-- SECTION TITLE -->
+        <h2 class="section-title">
+            Restaurants near you
+        </h2>
+
+
+        <!-- RESTAURANT CARD GRID -->
+        <div class="restaurant-grid">
+
+            {% for r in restaurantList %}
+
+            <div class="r-card"
+                 data-cuisine="{{ r.cuisine|lower }}"
+                 data-name="{{ r.name|lower }}"
+                 data-rating="{{ r.rating }}"
+                 data-vegetarian="{{ r.has_vegetarian|yesno:'true,false' }}"
+                 data-categories="{% for item in r.items.all %}{% if item.available %}{{ item.category }}{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}"
+                 data-prices="{% for item in r.items.all %}{% if item.available %}{{ item.price }}{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}">
+
+                <!-- RESTAURANT IMAGE -->
+                <div class="r-photo">
+
+                    <img src="{{ r.picture }}"
+                         alt="{{ r.name }}">
+
+                    <!-- RATING -->
+                    <span class="r-rating">
+
+                        <svg viewBox="0 0 20 20">
+                            <path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/>
+                        </svg>
+
+                        {{ r.rating }}
+
+                    </span>
+
+
+                    <!-- FAVORITE BUTTON -->
+                    <a href="{% url 'add_to_favorites' r.id username %}"
+                       class="favorite-btn">
+
+                        ♡
+
+                    </a>
+
+                </div>
+
+
+                <!-- RESTAURANT DETAILS -->
+                <div class="r-body">
+
+                    <div class="r-name">
+                        {{ r.name }}
+                    </div>
+
+                    <div class="r-cuisine">
+                        {{ r.cuisine }}
+                    </div>
+
+
+                    <!-- OPENING HOURS -->
+                    <div class="r-meta">
+
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="9"/>
+                            <path d="M12 7v5l3.5 2"/>
+                        </svg>
+
+                        {% if r.opening_time and r.closing_time %}
+
+                            {{ r.opening_time|time:"h:i A" }}
+                            –
+                            {{ r.closing_time|time:"h:i A" }}
+
+                        {% else %}
+
+                            <span class="unavailable">
+                                Hours not available
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- VIEW MENU -->
+                    <a href="{% url 'view_menu' r.id username %}"
+                       class="view-menu-btn">
+
+                        View Menu
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- NO SEARCH RESULTS -->
+        <div id="noResults" class="no-results">
+
+            <div class="no-results-icon">
+                🔍
+            </div>
+
+            <h3>
+                No restaurants found
+            </h3>
+
+            <p>
+                Try searching for another restaurant or cuisine.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- SEARCH JAVASCRIPT -->
+    <script>
+
+        (function () {
+
+            var chips = document.querySelectorAll('.chip');
+
+            var cards = document.querySelectorAll('.r-card');
+
+            var searchInput = document.getElementById('searchInput');
+
+            var noResults = document.getElementById('noResults');
+
+            var activeCuisine = 'all';
+            var activeRating = 0;
+            var vegetarianOnly = false;
+            var activeCategory = 'all';
+            var activePrice = 'all';
+
+
+            function applyFilters() {
+
+                var query = searchInput.value.trim().toLowerCase();
+
+                var visibleCount = 0;
+                
+
+
+                cards.forEach(function (card) {
+
+                    var cuisine =
+                        card.getAttribute('data-cuisine') || '';
+
+                    var name =
+                        card.getAttribute('data-name') || '';
+
+                    var rating =
+                        parseFloat(card.getAttribute('data-rating')) || 0;
+
+                    var hasVegetarian =
+                        card.getAttribute('data-vegetarian') === 'true';
+
+
+                    /*
+                     * Check selected cuisine
+                     */
+                    var matchesCuisine =
+                        (activeCuisine === 'all') ||
+                        (cuisine === activeCuisine);
+
+
+                    /*
+                     * Check search text
+                     */
+                    var matchesSearch =
+                        (query === '') ||
+                        name.includes(query) ||
+                        cuisine.includes(query);
+
+                    var matchesRating =
+                        rating >= activeRating;
+
+                    var matchesVegetarian =
+                        !vegetarianOnly || hasVegetarian;
+
+                    var categories =
+                        card.getAttribute('data-categories') || '';
+
+                    var categoryList =
+                        categories.split(',');
+
+                    var matchesCategory = activeCategory === 'all' ||
+                        categoryList.includes(activeCategory);
+
+
+                    var prices =
+    card.getAttribute('data-prices') || '';
+
+var priceList =
+    prices
+        .split(',')
+        .filter(function (price) {
+            return price !== '';
+        })
+        .map(function (price) {
+            return parseFloat(price);
+        });
+
+var matchesPrice = true;
+
+if (activePrice !== 'all') {
+
+    var maxPrice =
+        parseFloat(activePrice);
+
+    matchesPrice =
+        priceList.some(function (price) {
+            return price <= maxPrice;
+        });
+}
+                    /*
+                     * Show / hide card
+                     */
+                    if (matchesCuisine && matchesSearch  && matchesRating &&  matchesVegetarian && matchesCategory && matchesPrice) {
+
+                        card.style.display = '';
+
+                        visibleCount++;
+
+                    } else {
+
+                        card.style.display = 'none';
+
+                    }
+
+                });
+
+
+                /*
+                 * Show "No restaurants found"
+                 */
+                if (visibleCount === 0) {
+
+                    noResults.style.display = 'block';
+
+                } else {
+
+                    noResults.style.display = 'none';
+
+                }
+
+            }
+
+
+            /*
+             * Cuisine chip click
+             */
+            chips.forEach(function (chip) {
+
+                chip.addEventListener('click', function () {
+
+                    chips.forEach(function (c) {
+
+                        c.classList.remove('active');
+
+                    });
+
+
+                    chip.classList.add('active');
+
+
+                    activeCuisine =
+                        (chip.getAttribute('data-cuisine') || 'all')
+                        .toLowerCase();
+
+
+                    applyFilters();
+
+                });
+
+            });
+
+            /*
+ * Rating filter
+ */
+
+var ratingChips =
+    document.querySelectorAll('.rating-chip');
+
+
+ratingChips.forEach(function (chip) {
+
+    chip.addEventListener('click', function () {
+
+        ratingChips.forEach(function (c) {
+
+            c.classList.remove('active');
+
+        });
+
+
+        chip.classList.add('active');
+
+
+        activeRating =
+            parseFloat(
+                chip.getAttribute('data-rating')
+            ) || 0;
+
+
+        applyFilters();
+
+    });
+
+});
+
+
+var vegChips =
+    document.querySelectorAll('.veg-chip');
+
+
+vegChips.forEach(function (chip) {
+
+    chip.addEventListener('click', function () {
+
+        vegChips.forEach(function (c) {
+
+            c.classList.remove('active');
+
+        });
+
+
+        chip.classList.add('active');
+
+
+        var selected =
+            chip.getAttribute('data-vegetarian');
+
+
+        vegetarianOnly =
+            selected === 'true';
+
+
+        applyFilters();
+
+    });
+
+});
+
+var categoryChips =
+    document.querySelectorAll('.category-chip');
+
+categoryChips.forEach(function (chip) {
+
+    chip.addEventListener('click', function () {
+
+        categoryChips.forEach(function (c) {
+            c.classList.remove('active');
+        });
+
+        chip.classList.add('active');
+
+        activeCategory =
+            chip.getAttribute('data-category') || 'all';
+
+        applyFilters();
+
+    });
+
+});
+
+var priceChips =
+    document.querySelectorAll('.price-chip');
+
+priceChips.forEach(function (chip) {
+
+    chip.addEventListener('click', function () {
+
+        priceChips.forEach(function (c) {
+            c.classList.remove('active');
+        });
+
+        chip.classList.add('active');
+
+        activePrice =
+            chip.getAttribute('data-price') || 'all';
+
+        applyFilters();
+
+    });
+
+});
+
+
+            /*
+             * Search while typing
+             */
+            searchInput.addEventListener(
+                'input',
+                applyFilters
+            );
+
+
+            /*
+             * Search button
+             */
+            document
+                .getElementById('searchForm')
+                .addEventListener('submit', function (event) {
+
+                    event.preventDefault();
+
+                    applyFilters();
+
+                });
+
+        /* ==============================
+   FILTER PANEL
+   ============================== */
+
+var filterPanel =
+    document.getElementById('filterPanel');
+
+var openFilters =
+    document.getElementById('openFilters');
+
+var closeFilters =
+    document.getElementById('closeFilters');
+
+var applyFiltersButton =
+    document.getElementById('applyFilters');
+
+var clearFilters =
+    document.getElementById('clearFilters');
+
+
+openFilters.addEventListener('click', function () {
+
+    filterPanel.classList.add('show');
+
+});
+
+
+closeFilters.addEventListener('click', function () {
+
+    filterPanel.classList.remove('show');
+
+});
+
+
+applyFiltersButton.addEventListener('click', function () {
+
+    filterPanel.classList.remove('show');
+
+});
+
+
+clearFilters.addEventListener('click', function () {
+
+    /* Reset rating */
+
+    activeRating = 0;
+
+    var ratingChips =
+        document.querySelectorAll('.rating-chip');
+
+    ratingChips.forEach(function (chip) {
+        chip.classList.remove('active');
+    });
+
+    document
+        .querySelector('.rating-chip[data-rating="0"]')
+        .classList.add('active');
+
+
+    /* Reset vegetarian */
+
+    vegetarianOnly = false;
+
+    var vegChips =
+        document.querySelectorAll('.veg-chip');
+
+    vegChips.forEach(function (chip) {
+        chip.classList.remove('active');
+    });
+
+    document
+        .querySelector('.veg-chip[data-vegetarian="all"]')
+        .classList.add('active');
+
+
+    /* Reset category */
+
+    activeCategory = 'all';
+
+    var categoryChips =
+        document.querySelectorAll('.category-chip');
+
+    categoryChips.forEach(function (chip) {
+        chip.classList.remove('active');
+    });
+
+    document
+        .querySelector('.category-chip[data-category="all"]')
+        .classList.add('active');
+
+
+    /* Reset price */
+
+activePrice = 'all';
+
+var priceChips =
+    document.querySelectorAll('.price-chip');
+
+priceChips.forEach(function (chip) {
+    chip.classList.remove('active');
+});
+
+document
+    .querySelector('.price-chip[data-price="all"]')
+    .classList.add('active');
+
+
+    /* Apply reset */
+
+    applyFilters();
+
+});
+ })();
+
+    </script>
+
+</body>
+
+</html>

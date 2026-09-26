@@ -1,0 +1,2257 @@
+/* =========================================================
+   CRAVECART - CUSTOMER HOME CSS
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT VARIABLES
+   ========================================================= */
+
+:root {
+    --black: #090909;
+    --black-soft: #121212;
+
+    --card: #18191B;
+    --card-light: #1D1E21;
+
+    --gold-dark: #8F6B24;
+    --gold: #C7A24A;
+    --gold-light: #F3D27A;
+    --gold-bright: #FFE8A8;
+
+    --cream: #E8DDC8;
+    --text: #F0E8D9;
+    --text-soft: #A9A39A;
+    --text-faint: #706B62;
+
+    --line: #3A342B;
+
+    --brown: #291912;
+    --brown-light: #524433;
+
+    --green: #4FBE83;
+    --green-soft: #173325;
+
+    --red: #E06A5C;
+    --red-soft: #3A1414;
+
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--black);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+
+/* =========================================================
+   TOP NAVIGATION
+   ========================================================= */
+
+.topnav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 16px 40px;
+
+    background: var(--black-soft);
+
+    border-bottom: 1px solid var(--line);
+
+    position: relative;
+    z-index: 20;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.brand .mark {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 8px;
+
+    background: linear-gradient(
+        135deg,
+        #8F6B24 0%,
+        #C7A24A 30%,
+        #F3D27A 50%,
+        #C7A24A 70%,
+        #8F6B24 100%
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.30),
+        0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.brand .mark svg {
+    width: 16px;
+    height: 16px;
+
+    stroke: #090909;
+    fill: none;
+    stroke-width: 2;
+}
+
+.crave,
+.cart {
+    color: var(--cream);
+}
+
+nav.links {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+nav.links a {
+    color: var(--text-soft);
+
+    text-decoration: none;
+
+    padding: 6px 2px;
+
+    border-bottom: 2px solid transparent;
+
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+nav.links a:hover {
+    color: var(--gold-light);
+}
+
+nav.links a.active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold);
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #8F6B24,
+        #F3D27A
+    );
+
+    color: #090909;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.30);
+}
+
+.logout-link {
+    font-size: 0.85rem;
+
+    color: var(--text-soft);
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.logout-link:hover {
+    color: var(--gold-light);
+}
+
+
+/* =========================================================
+   PROFILE NAV LINK
+   ========================================================= */
+
+.profile-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 16px;
+
+    background: linear-gradient(
+        135deg,
+        #8F6B24,
+        #C7A24A,
+        #F3D27A,
+        #C7A24A,
+        #8F6B24
+    );
+
+    color: #090909 !important;
+
+    border: 1px solid var(--gold-light);
+
+    border-radius: 20px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    text-decoration: none !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.30);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.profile-link:hover {
+    color: #090909 !important;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 16px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.40);
+}
+
+
+/* =========================================================
+   MAIN PAGE
+   ========================================================= */
+
+.page {
+    width: min(1200px, 92%);
+
+    margin: 0 auto;
+
+    padding: 36px 0 60px;
+}
+
+
+/* =========================================================
+   SEARCH HERO
+   ========================================================= */
+
+.search-hero {
+    background:
+        linear-gradient(
+            120deg,
+            #17130F 0%,
+            #211A12 45%,
+            #121212 100%
+        );
+
+    border: 1px solid var(--line);
+
+    border-radius: 20px;
+
+    padding: 36px 40px;
+
+    margin-bottom: 24px;
+
+    color: var(--cream);
+
+    box-shadow:
+        0 16px 35px rgba(0, 0, 0, 0.38);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.search-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    right: -80px;
+    top: -100px;
+
+    border-radius: 50%;
+
+    background: rgba(199, 162, 74, 0.07);
+
+    pointer-events: none;
+}
+
+.welcome {
+    font-family: var(--font-display);
+
+    font-weight: 600;
+
+    font-size: 1.7rem;
+
+    color: var(--cream);
+
+    margin-bottom: 6px;
+
+    position: relative;
+    z-index: 1;
+}
+
+.subhead {
+    color: var(--gold-light);
+
+    font-size: 0.98rem;
+
+    margin-bottom: 22px;
+
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================================
+   SEARCH BAR
+   ========================================================= */
+
+.search-bar {
+    display: flex;
+    align-items: center;
+
+    background: var(--card);
+
+    border: 1px solid var(--line);
+
+    border-radius: 12px;
+
+    padding: 6px 6px 6px 16px;
+
+    max-width: 560px;
+
+    gap: 10px;
+
+    position: relative;
+    z-index: 2;
+}
+
+.search-icon {
+    width: 18px;
+    height: 18px;
+
+    stroke: var(--text-soft);
+
+    fill: none;
+
+    stroke-width: 2;
+
+    flex-shrink: 0;
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+
+    flex-grow: 1;
+
+    font-family: var(--font-body);
+
+    font-size: 0.92rem;
+
+    color: var(--cream);
+
+    background: transparent;
+
+    padding: 10px 0;
+}
+
+.search-bar input::placeholder {
+    color: var(--text-faint);
+}
+
+.search-bar button {
+    border: 1px solid var(--gold-light);
+
+    background: linear-gradient(
+        135deg,
+        #8F6B24,
+        #C7A24A,
+        #F3D27A,
+        #C7A24A,
+        #8F6B24
+    );
+
+    color: #090909;
+
+    font-weight: 700;
+
+    font-size: 0.85rem;
+
+    padding: 10px 20px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-family: var(--font-body);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.30);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.search-bar button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.40);
+}
+
+
+/* =========================================================
+   CUISINE CHIPS
+   ========================================================= */
+
+.chip-row {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 30px;
+}
+
+.chip {
+    background: var(--card);
+
+    border: 1px solid var(--line);
+
+    color: var(--text-soft);
+
+    font-size: 0.85rem;
+
+    font-weight: 600;
+
+    padding: 8px 18px;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.chip:hover {
+    border-color: var(--gold);
+
+    color: var(--cream);
+}
+
+.chip.active {
+    background: linear-gradient(
+        135deg,
+        #8F6B24,
+        #C7A24A,
+        #F3D27A,
+        #C7A24A,
+        #8F6B24
+    );
+
+    color: #090909;
+
+    border-color: var(--gold-light);
+}
+
+
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
+
+.section-title {
+    font-family: var(--font-display);
+
+    font-weight: 600;
+
+    font-size: 1.3rem;
+
+    color: var(--cream);
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   RESTAURANT GRID
+   ========================================================= */
+
+.restaurant-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(260px, 1fr));
+
+    gap: 22px;
+}
+
+
+/* =========================================================
+   RESTAURANT CARD
+   ========================================================= */
+
+.r-card {
+    background: var(--card);
+
+    border: 1px solid var(--line);
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow:
+        0 10px 26px rgba(0, 0, 0, 0.30);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.r-card:hover {
+    transform: translateY(-4px);
+
+    border-color: #5A4A32;
+
+    box-shadow:
+        0 16px 32px rgba(0, 0, 0, 0.42);
+}
+
+
+/* =========================================================
+   RESTAURANT IMAGE
+   ========================================================= */
+
+.r-photo {
+    width: 100%;
+    height: 160px;
+
+    overflow: hidden;
+
+    background: #111;
+
+    position: relative;
+}
+
+.r-photo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition: transform 0.35s ease;
+}
+
+.r-card:hover .r-photo img {
+    transform: scale(1.03);
+}
+
+
+/* =========================================================
+   FAVORITE BUTTON
+   ========================================================= */
+
+.favorite-btn {
+    position: absolute;
+
+    top: 12px;
+    left: 12px;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(18, 18, 18, 0.90);
+
+    color: var(--cream);
+
+    border: 1px solid rgba(243, 210, 122, 0.24);
+
+    border-radius: 50%;
+
+    text-decoration: none;
+
+    font-size: 22px;
+    font-weight: bold;
+
+    box-shadow:
+        0 5px 14px rgba(0, 0, 0, 0.35);
+
+    z-index: 5;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.favorite-btn:hover {
+    background: var(--gold);
+
+    color: #090909;
+
+    transform: scale(1.04);
+}
+
+
+/* =========================================================
+   RESTAURANT RATING
+   ========================================================= */
+
+.r-rating {
+    position: absolute;
+
+    top: 10px;
+    right: 10px;
+
+    background: rgba(9, 9, 9, 0.88);
+
+    color: var(--cream);
+
+    font-size: 0.78rem;
+
+    font-weight: 700;
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    border: 1px solid rgba(243, 210, 122, 0.20);
+
+    backdrop-filter: blur(5px);
+}
+
+.r-rating svg {
+    width: 11px;
+    height: 11px;
+
+    fill: var(--gold-light);
+}
+
+
+/* =========================================================
+   RESTAURANT BODY
+   ========================================================= */
+
+.r-body {
+    padding: 16px 18px 18px;
+
+    display: flex;
+    flex-direction: column;
+
+    flex-grow: 1;
+}
+
+.r-name {
+    font-family: var(--font-display);
+
+    font-weight: 600;
+
+    font-size: 1.1rem;
+
+    color: var(--cream);
+
+    margin-bottom: 4px;
+}
+
+.r-cuisine {
+    font-size: 0.82rem;
+
+    color: var(--gold-light);
+
+    margin-bottom: 10px;
+}
+
+.r-meta {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    font-size: 0.8rem;
+
+    color: var(--text-soft);
+
+    margin-bottom: 16px;
+}
+
+.r-meta svg {
+    width: 14px;
+    height: 14px;
+
+    stroke: var(--text-soft);
+
+    fill: none;
+
+    stroke-width: 1.8;
+}
+
+.unavailable {
+    color: var(--red);
+}
+
+
+/* =========================================================
+   VIEW MENU BUTTON
+   ========================================================= */
+
+.view-menu-btn {
+    margin-top: auto;
+
+    text-align: center;
+
+    background: linear-gradient(
+        135deg,
+        #8F6B24,
+        #C7A24A,
+        #F3D27A,
+        #C7A24A,
+        #8F6B24
+    );
+
+    color: #090909;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    font-size: 0.85rem;
+
+    padding: 10px 16px;
+
+    border-radius: 10px;
+
+    border: 1px solid var(--gold-light);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.30);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.view-menu-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 20px rgba(0, 0, 0, 0.36),
+        inset 0 1px 0 rgba(255, 255, 255, 0.40);
+}
+
+
+/* =========================================================
+   NO SEARCH RESULTS
+   ========================================================= */
+
+.no-results {
+    display: none;
+
+    text-align: center;
+
+    padding: 60px 20px;
+
+    margin: 20px 0;
+}
+
+.no-results-icon {
+    font-size: 42px;
+
+    margin-bottom: 12px;
+}
+
+.no-results h3 {
+    margin: 0 0 8px;
+
+    font-family: var(--font-display);
+
+    font-size: 24px;
+
+    color: var(--cream);
+}
+
+.no-results p {
+    margin: 0;
+
+    color: var(--text-soft);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   RATING FILTER
+   ========================================================= */
+
+.rating-filter {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: -18px;
+    margin-bottom: 30px;
+}
+
+.filter-label {
+    font-size: 0.85rem;
+
+    font-weight: 700;
+
+    color: var(--cream);
+
+    margin-right: 2px;
+}
+
+.rating-chip {
+    background: var(--card);
+
+    border: 1px solid var(--line);
+
+    color: var(--text-soft);
+
+    font-size: 0.82rem;
+
+    font-weight: 600;
+
+    padding: 8px 16px;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition:
+        0.2s ease;
+}
+
+.rating-chip:hover {
+    border-color: var(--gold);
+
+    color: var(--cream);
+}
+
+.rating-chip.active {
+    background: linear-gradient(
+        135deg,
+        #8F6B24,
+        #C7A24A,
+        #F3D27A,
+        #C7A24A,
+        #8F6B24
+    );
+
+    color: #090909;
+
+    border-color: var(--gold-light);
+}
+
+
+/* =========================================================
+   VEGETARIAN FILTER
+   ========================================================= */
+
+.vegetarian-filter {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: -18px;
+    margin-bottom: 30px;
+}
+
+.veg-chip {
+    background: var(--card);
+
+    border: 1px solid var(--line);
+
+    color: var(--text-soft);
+
+    font-size: 0.82rem;
+
+    font-weight: 600;
+
+    padding: 8px 16px;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition: 0.2s ease;
+}
+
+.veg-chip:hover {
+    border-color: var(--gold);
+
+    color: var(--cream);
+}
+
+.veg-chip.active {
+    background: linear-gradient(
+        135deg,
+        #8F6B24,
+        #C7A24A,
+        #F3D27A,
+        #C7A24A,
+        #8F6B24
+    );
+
+    color: #090909;
+
+    border-color: var(--gold-light);
+}
+
+
+/* =========================================================
+   FILTER BUTTON
+   ========================================================= */
+
+.filter-button-row {
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin: 0 0 25px;
+}
+
+.filter-button {
+    border: 1px solid var(--line);
+
+    background: var(--card);
+
+    color: var(--cream);
+
+    padding: 10px 18px;
+
+    border-radius: 22px;
+
+    font-size: 0.88rem;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+}
+
+.filter-button:hover {
+    border-color: var(--gold);
+
+    color: var(--gold-light);
+
+    background: #1F1D19;
+}
+
+
+/* =========================================================
+   FILTER PANEL
+   ========================================================= */
+
+.filter-panel {
+    display: none;
+
+    background: var(--card);
+
+    border: 1px solid var(--line);
+
+    border-radius: 16px;
+
+    padding: 22px;
+
+    margin-bottom: 30px;
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.30);
+}
+
+.filter-panel.show {
+    display: block;
+}
+
+
+/* =========================================================
+   FILTER PANEL HEADER
+   ========================================================= */
+
+.filter-panel-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.filter-panel-header h3 {
+    font-family: var(--font-display);
+
+    font-size: 22px;
+
+    color: var(--cream);
+}
+
+.filter-close {
+    width: 32px;
+    height: 32px;
+
+    border: 1px solid var(--line);
+
+    border-radius: 50%;
+
+    background: #121212;
+
+    color: var(--cream);
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    transition: 0.2s ease;
+}
+
+.filter-close:hover {
+    background: var(--gold);
+
+    color: #090909;
+
+    border-color: var(--gold-light);
+}
+
+
+/* =========================================================
+   FILTER SECTIONS
+   ========================================================= */
+
+.filter-section {
+    padding: 18px 0;
+
+    border-top: 1px solid var(--line);
+}
+
+.filter-section:first-of-type {
+    border-top: none;
+}
+
+.filter-section-title {
+    display: block;
+
+    font-size: 0.9rem;
+
+    font-weight: 700;
+
+    color: var(--cream);
+
+    margin-bottom: 12px;
+}
+
+.filter-options {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   CATEGORY FILTER
+   ========================================================= */
+
+.category-chip {
+    background: var(--card);
+
+    border: 1px solid var(--line);
+
+    color: var(--text-soft);
+
+    font-size: 0.82rem;
+
+    font-weight: 600;
+
+    padding: 8px 16px;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition: 0.2s ease;
+}
+
+.category-chip:hover {
+    border-color: var(--gold);
+
+    color: var(--cream);
+}
+
+.category-chip.active {
+    background: linear-gradient(
+        135deg,
+        #8F6B24,
+        #C7A24A,
+        #F3D27A,
+        #C7A24A,
+        #8F6B24
+    );
+
+    color: #090909;
+
+    border-color: var(--gold-light);
+}
+
+
+/* =========================================================
+   PRICE FILTER
+   ========================================================= */
+
+.price-chip {
+    background: var(--card);
+
+    border: 1px solid var(--line);
+
+    color: var(--text-soft);
+
+    font-size: 0.82rem;
+
+    font-weight: 600;
+
+    padding: 8px 16px;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition: 0.2s ease;
+}
+
+.price-chip:hover {
+    border-color: var(--gold);
+
+    color: var(--cream);
+}
+
+.price-chip.active {
+    background: linear-gradient(
+        135deg,
+        #8F6B24,
+        #C7A24A,
+        #F3D27A,
+        #C7A24A,
+        #8F6B24
+    );
+
+    color: #090909;
+
+    border-color: var(--gold-light);
+}
+
+
+/* =========================================================
+   FILTER ACTIONS
+   ========================================================= */
+
+.filter-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    border-top: 1px solid var(--line);
+
+    padding-top: 18px;
+
+    margin-top: 5px;
+}
+
+.clear-filter,
+.apply-filter {
+    padding: 9px 18px;
+
+    border-radius: 20px;
+
+    font-size: 0.85rem;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.clear-filter {
+    background: #121212;
+
+    border: 1px solid var(--line);
+
+    color: var(--text-soft);
+}
+
+.clear-filter:hover {
+    border-color: var(--gold);
+
+    color: var(--gold-light);
+}
+
+.apply-filter {
+    background: linear-gradient(
+        135deg,
+        #8F6B24,
+        #C7A24A,
+        #F3D27A,
+        #C7A24A,
+        #8F6B24
+    );
+
+    border: 1px solid var(--gold-light);
+
+    color: #090909;
+}
+
+.apply-filter:hover {
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   ACCOUNT / PROFILE PAGE
+   ========================================================= */
+
+.account-page {
+    min-height: calc(100vh - 70px);
+
+    padding: 45px 20px 70px;
+
+    background: var(--black);
+}
+
+.account-container {
+    width: 100%;
+
+    max-width: 900px;
+
+    margin: 0 auto;
+}
+
+.account-heading {
+    margin-bottom: 25px;
+}
+
+.account-heading h1 {
+    margin: 0;
+
+    font-family: var(--font-display);
+
+    font-size: 34px;
+
+    color: var(--cream);
+}
+
+.account-heading p {
+    margin: 7px 0 0;
+
+    color: var(--text-soft);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   PROFILE HEADER
+   ========================================================= */
+
+.account-profile-card {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 25px;
+
+    background: var(--card);
+
+    border: 1px solid var(--line);
+
+    border-radius: 18px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+.account-avatar {
+    width: 70px;
+    height: 70px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #8F6B24,
+        #F3D27A
+    );
+
+    color: #090909;
+
+    font-size: 26px;
+
+    font-weight: 700;
+}
+
+.account-profile-info {
+    flex: 1;
+}
+
+.account-profile-info h2 {
+    margin: 0 0 5px;
+
+    font-family: var(--font-display);
+
+    font-size: 24px;
+
+    color: var(--cream);
+}
+
+.account-profile-info p {
+    margin: 0;
+
+    color: var(--text-soft);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   EDIT PROFILE BUTTON
+   ========================================================= */
+
+.edit-profile-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 18px;
+
+    border: 1px solid var(--gold);
+
+    border-radius: 20px;
+
+    background: transparent;
+
+    color: var(--gold-light);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.edit-profile-btn:hover {
+    background: var(--gold);
+
+    color: #090909;
+
+    border-color: var(--gold-light);
+}
+
+
+/* =========================================================
+   ACCOUNT SECTIONS
+   ========================================================= */
+
+.account-section {
+    background: var(--card);
+
+    border: 1px solid var(--line);
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.24);
+}
+
+.account-section-heading {
+    margin-bottom: 20px;
+}
+
+.account-section-heading h2 {
+    margin: 0;
+
+    font-family: var(--font-display);
+
+    font-size: 21px;
+
+    color: var(--cream);
+}
+
+.account-section-heading p {
+    margin: 5px 0 0;
+
+    color: var(--text-soft);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   PERSONAL INFORMATION
+   ========================================================= */
+
+.account-info-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+}
+
+.account-info-item {
+    padding: 16px;
+
+    background: var(--black-soft);
+
+    border: 1px solid var(--line);
+
+    border-radius: 12px;
+}
+
+.account-info-label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--text-soft);
+
+    font-size: 12px;
+}
+
+.account-info-item strong {
+    color: var(--cream);
+
+    font-size: 14px;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   SAVED ADDRESSES
+   ========================================================= */
+
+.saved-addresses {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    width: 100%;
+}
+
+.address-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    width: 100%;
+
+    padding: 17px;
+
+    background: var(--black-soft);
+
+    border: 1px solid var(--line);
+
+    border-radius: 12px;
+
+    box-sizing: border-box;
+}
+
+.address-icon {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: var(--brown);
+
+    border: 1px solid #5A4025;
+
+    font-size: 20px;
+}
+
+.address-content {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.address-content strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--cream);
+
+    font-size: 14px;
+}
+
+.address-content p {
+    margin: 0;
+
+    color: var(--text-soft);
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   ADDRESS ACTIONS
+   ========================================================= */
+
+.address-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    flex-shrink: 0;
+}
+
+.address-actions form {
+    margin: 0;
+}
+
+.address-action {
+    border: none;
+
+    background: transparent;
+
+    color: var(--gold-light);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    text-decoration: underline;
+
+    padding: 0;
+}
+
+.address-action:hover {
+    color: var(--gold-bright);
+}
+
+.delete-address-btn {
+    border: none;
+
+    background: transparent;
+
+    color: var(--red);
+
+    font-family: var(--font-body);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    padding: 0;
+}
+
+.delete-address-btn:hover {
+    color: #FF8A7A;
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   ADD ADDRESS BUTTON
+   ========================================================= */
+
+.add-address-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-top: 18px;
+
+    padding: 10px 18px;
+
+    border: 1px dashed var(--gold);
+
+    border-radius: 20px;
+
+    background: transparent;
+
+    color: var(--gold-light);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    line-height: 1.4;
+
+    transition: 0.2s ease;
+}
+
+.add-address-btn:hover {
+    background: var(--gold);
+
+    color: #090909;
+
+    border-color: var(--gold-light);
+}
+
+
+/* =========================================================
+   NO ADDRESS MESSAGE
+   ========================================================= */
+
+.no-address {
+    margin: 0;
+
+    padding: 15px;
+
+    color: var(--text-soft);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ACCOUNT OPTIONS
+   ========================================================= */
+
+.account-options {
+    display: grid;
+
+    gap: 10px;
+}
+
+.account-option {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 16px;
+
+    border: 1px solid var(--line);
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    background: var(--black-soft);
+
+    transition:
+        0.2s ease;
+}
+
+.account-option:hover {
+    border-color: var(--gold);
+
+    transform: translateY(-1px);
+
+    background: #181818;
+}
+
+.option-icon {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: var(--brown);
+
+    border: 1px solid #5A4025;
+
+    color: var(--gold-light);
+
+    font-size: 19px;
+}
+
+.account-option span:nth-child(2) {
+    flex: 1;
+}
+
+.account-option strong {
+    display: block;
+
+    color: var(--cream);
+
+    font-size: 14px;
+}
+
+.account-option small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: var(--text-soft);
+
+    font-size: 12px;
+}
+
+.option-arrow {
+    color: var(--text-soft);
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+.account-logout {
+    text-align: center;
+
+    padding: 15px;
+}
+
+.account-logout a {
+    color: var(--gold-light);
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.account-logout a:hover {
+    color: var(--gold-bright);
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   EDIT PROFILE PAGE
+   ========================================================= */
+
+.edit-profile-section {
+    max-width: 100%;
+}
+
+.edit-field {
+    margin-bottom: 20px;
+}
+
+.edit-field label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--cream);
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.edit-field input,
+.edit-field textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid var(--line);
+
+    border-radius: 10px;
+
+    background: var(--black-soft);
+
+    color: var(--cream);
+
+    font-family: var(--font-body);
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+.edit-field input::placeholder,
+.edit-field textarea::placeholder {
+    color: var(--text-faint);
+}
+
+.edit-field input:focus,
+.edit-field textarea:focus {
+    border-color: var(--gold-light);
+
+    background: var(--card);
+
+    box-shadow:
+        0 0 0 3px rgba(243, 210, 122, 0.10);
+}
+
+.edit-field input[readonly] {
+    background: #211D18;
+
+    color: var(--text-soft);
+
+    cursor: not-allowed;
+}
+
+.edit-field textarea {
+    resize: vertical;
+
+    min-height: 90px;
+}
+
+.edit-field small {
+    display: block;
+
+    margin-top: 6px;
+
+    color: var(--text-soft);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   EDIT PROFILE ACTIONS
+   ========================================================= */
+
+.edit-profile-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+.cancel-profile-btn,
+.save-profile-btn {
+    padding: 11px 20px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+.cancel-profile-btn {
+    border: 1px solid var(--line);
+
+    background: transparent;
+
+    color: var(--cream);
+}
+
+.cancel-profile-btn:hover {
+    background: #211D18;
+
+    border-color: #5A4A32;
+
+    color: var(--gold-light);
+}
+
+.save-profile-btn {
+    border: 1px solid var(--gold-light);
+
+    background: linear-gradient(
+        135deg,
+        #8F6B24,
+        #C7A24A,
+        #F3D27A,
+        #C7A24A,
+        #8F6B24
+    );
+
+    color: #090909;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.30);
+}
+
+.save-profile-btn:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.40);
+}
+
+
+/* =========================================================
+   ADDRESS DEFAULT / EXTRA
+   ========================================================= */
+
+.address-default {
+    padding: 5px 10px;
+
+    border-radius: 12px;
+
+    background: var(--brown);
+
+    border: 1px solid #5A4025;
+
+    color: var(--gold-light);
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+.no-addresses {
+    margin: 15px 0;
+
+    color: var(--text-soft);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ADDRESS FORM SELECT
+   ========================================================= */
+
+.edit-field select {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid var(--line);
+
+    border-radius: 10px;
+
+    background: var(--black-soft);
+
+    color: var(--cream);
+
+    font-family: var(--font-body);
+
+    font-size: 14px;
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.edit-field select:focus {
+    border-color: var(--gold-light);
+
+    background: var(--card);
+
+    box-shadow:
+        0 0 0 3px rgba(243, 210, 122, 0.10);
+}
+
+
+/* =========================================================
+   AUTOFILL
+   ========================================================= */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-text-fill-color: var(--cream);
+
+    transition:
+        background-color 9999s ease-in-out 0s;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .topnav {
+        padding: 14px 20px;
+    }
+
+    nav.links {
+        display: none;
+    }
+
+    .search-hero {
+        padding: 26px 22px;
+    }
+
+    .page {
+        padding: 24px 0 40px;
+    }
+
+    .restaurant-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 14px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .account-page {
+        padding: 30px 15px 50px;
+    }
+
+    .account-heading h1 {
+        font-size: 29px;
+    }
+
+    .account-profile-card {
+        align-items: flex-start;
+
+        flex-wrap: wrap;
+    }
+
+    .edit-profile-btn {
+        width: 100%;
+    }
+
+    .account-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .account-section {
+        padding: 20px 16px;
+    }
+
+    .address-card {
+        align-items: flex-start;
+
+        flex-wrap: wrap;
+    }
+
+    .address-actions {
+        width: 100%;
+
+        margin-left: 57px;
+
+        margin-top: 4px;
+    }
+
+    .filter-panel {
+        padding: 18px;
+    }
+
+    .filter-actions {
+        flex-direction: column;
+    }
+
+    .clear-filter,
+    .apply-filter {
+        width: 100%;
+    }
+
+    .edit-profile-actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancel-profile-btn,
+    .save-profile-btn {
+        width: 100%;
+
+        box-sizing: border-box;
+
+        text-align: center;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .restaurant-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-bar {
+        flex-wrap: wrap;
+
+        max-width: 100%;
+    }
+
+    .search-bar input {
+        min-width: 0;
+    }
+
+    .search-bar button {
+        width: 100%;
+    }
+
+    .search-hero {
+        padding: 24px 18px;
+    }
+
+    .welcome {
+        font-size: 1.45rem;
+    }
+
+    .subhead {
+        font-size: 0.9rem;
+    }
+
+    .address-actions {
+        margin-left: 0;
+    }
+
+    .topnav {
+        padding: 12px 16px;
+    }
+
+    .profile {
+        gap: 8px;
+    }
+
+    .profile-link {
+        padding: 7px 12px;
+        font-size: 12px;
+    }
+
+    .logout-link {
+        font-size: 12px;
+    }
+}

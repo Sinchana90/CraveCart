@@ -1,0 +1,155 @@
+2. Django basics
+
+What is Django?
+Why is Django used?
+What are the advantages of Django?
+What is the Django MVT architecture?
+What is the difference between MVC and MVT?
+What are the main components of Django?
+What is a Django project?
+What is a Django app?
+What is the difference between a project and an app?
+How do you create a Django project?
+django-admin startproject myproject
+How do you create a Django app?
+python manage.py startapp myapp
+What is manage.py?
+What is settings.py?
+What is urls.py?
+What is views.py?
+What is models.py?
+What is admin.py?
+What is apps.py?
+What is migrations?
+What is manage.py runserver?
+3. Django URLs and Views
+
+What is URL routing in Django?
+How do you connect a URL to a view?
+What is a view in Django?
+What is the difference between function-based views and class-based views?
+What is HttpResponse?
+What is render()?
+What is redirect()?
+How do you pass data from a view to a template?
+What is request in Django?
+What is the difference between GET and POST?
+Example:
+
+def home(request):
+    return render(request, "home.html")
+4. Django Templates
+
+What is a Django template?
+What is template inheritance?
+What is base.html?
+What are template tags?
+What are template variables?
+What are Django template filters?
+How do you use an if condition in a template?
+How do you use a for loop in a template?
+What is {% csrf_token %}?
+What is the difference between {% %} and {{ }}?
+Example:
+
+{% for user in users %}
+    <p>{{ user.username }}</p>
+{% endfor %}
+5. Django Models
+
+This is very important for fresher interviews.
+
+What is a Django model?
+Why do we use models?
+What is ORM?
+What is Django ORM?
+What is a model field?
+Explain CharField, IntegerField, BooleanField, DateField, etc.
+What is a primary key?
+What is a foreign key?
+What is OneToOneField?
+What is ManyToManyField?
+Explain the difference between ForeignKey, OneToOneField, and ManyToManyField.
+What is on_delete?
+What is CASCADE?
+What is null=True?
+What is blank=True?
+What is the difference between null=True and blank=True?
+What is default in a model?
+What is unique=True?
+What is the Meta class?
+Example:
+
+class Student(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+    email = models.EmailField(unique=True)
+profile photo
+gamana
+12:48 PM
+6. Django Migrations
+
+What are migrations?
+Why are migrations required?
+What does this command do?
+python manage.py makemigrations
+What does this command do?
+python manage.py migrate
+What is the difference between makemigrations and migrate?
+What happens when you change a model?
+7. Django ORM
+
+Another very important interview topic.
+
+How do you retrieve all objects?
+Student.objects.all()
+How do you retrieve one object?
+Student.objects.get(id=1)
+What is filter()?
+What is the difference between get() and filter()?
+How do you create an object?
+Student.objects.create(
+    name="Rahul",
+    age=22
+)
+How do you update an object?
+How do you delete an object?
+What is order_by()?
+What is exclude()?
+What are QuerySets?
+What is select_related()?
+What is prefetch_related()?
+What is the difference between select_related() and prefetch_related()?
+8. Django Forms
+
+What are Django forms?
+Why do we use forms?
+What is forms.Form?
+What is forms.ModelForm?
+Difference between Form and ModelForm?
+How do you validate a form?
+What is is_valid()?
+What is clean()?
+How do you display form errors?
+9. Authentication
+
+How does authentication work in Django?
+What is the Django User model?
+How do you create a user?
+What is createsuperuser?
+python manage.py createsuperuser
+What is login authentication?
+What is logout?
+What is request.user?
+What is login_required?
+Difference between authentication and authorization?
+How do you create a custom user model?
+10. Django Admin
+
+What is Django Admin?
+How do you create a superuser?
+How do you register a model in admin?
+admin.site.register(Student)
+How do you customize Django Admin?
+What is ModelAdmin?
+How can you display specific fields in the admin panel?

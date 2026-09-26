@@ -1,0 +1,355 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ restaurant.name }} - CraveCart</title>
+
+    <link
+        rel="stylesheet"
+        <link rel="stylesheet" href="{% static 'delivery/customer_menu.css' %}?v=4">
+    >
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+
+        <div class="logo">
+            CraveCart
+        </div>
+
+        <a href="{% url 'show_cart' username %}" class="cart-btn">
+            🛒 View Cart
+        </a>
+
+    </div>
+
+
+    <!-- ADD TO CART NOTIFICATION -->
+    {% if messages %}
+
+        <div class="message-container">
+
+            {% for message in messages %}
+
+                <div class="menu-alert">
+
+                    <span class="alert-icon">✓</span>
+
+                    <div class="alert-content">
+                        <strong>Cart notification</strong>
+                        <p>{{ message }}</p>
+                    </div>
+
+                    <a
+                        href="{% url 'show_cart' username %}"
+                        class="alert-cart-link"
+                    >
+                        View Cart →
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+
+        <!-- RESTAURANT BANNER -->
+        <div class="restaurant-hero">
+
+            <img
+                src="{% static 'delivery/images/customer_menu.jpg' %}"
+                alt="{{ restaurant.name }} banner"
+                class="restaurant-banner"
+            >
+
+            <div class="restaurant-hero-content">
+
+                <h1 class="restaurant-name">
+                    {{ restaurant.name }}
+                </h1>
+
+                <div class="restaurant-info">
+
+                    <span class="rating">
+                        ⭐ {{ restaurant.rating }}
+                    </span>
+
+                    <span class="restaurant-separator">•</span>
+
+                    <span>{{ restaurant.cuisine }}</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SEARCH -->
+        <div class="menu-search">
+
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="M21 21l-4.3-4.3"></path>
+            </svg>
+
+            <input
+                type="text"
+                id="menuSearchInput"
+                placeholder="Search dishes on this menu"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <!-- MENU HEADING -->
+        <h2 class="menu-heading">
+            Menu
+        </h2>
+
+
+        {% if category_data %}
+
+            <!-- MENU CATEGORIES -->
+            {% for category in category_data %}
+
+                <div class="category" data-category>
+
+                    <h2 class="category-title">
+                        {{ category.label }}
+                    </h2>
+
+
+                    <!-- FOOD ITEMS -->
+                    {% for item in category.items %}
+
+                        <div
+                            class="item-card"
+                            data-item-name="{{ item.name|lower }}"
+                        >
+
+                            <!-- ITEM DETAILS -->
+                            <div class="item-info">
+
+                                <div class="item-name">
+                                    {{ item.name }}
+                                </div>
+
+                                <div class="item-price">
+                                    ₹{{ item.price }}
+                                </div>
+
+                                <div class="item-description">
+                                    {{ item.description }}
+                                </div>
+
+
+                                <!-- VEG / NON-VEG -->
+                                {% if item.vegetarian %}
+
+                                    <div class="veg">
+                                        ● Vegetarian
+                                    </div>
+
+                                {% else %}
+
+                                    <div class="non-veg">
+                                        ● Non-Vegetarian
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- ITEM IMAGE AND ADD BUTTON -->
+                            <div class="item-right">
+
+                                <img
+                                    src="{{ item.picture }}"
+                                    alt="{{ item.name }}"
+                                    class="item-image"
+                                    loading="lazy"
+                                >
+
+                                <a
+                                    href="{% url 'add_to_cart' item.id username %}"
+                                    class="add-btn"
+                                >
+                                    ADD
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endfor %}
+
+
+            <!-- NO SEARCH RESULTS -->
+            <div
+                class="empty"
+                id="noSearchResults"
+                style="display: none;"
+            >
+                <h2>No dishes found</h2>
+                <p>Try a different search term.</p>
+            </div>
+
+
+        {% else %}
+
+            <!-- EMPTY MENU -->
+            <div class="empty">
+                <h2>No items available</h2>
+
+                <p>
+                    This restaurant currently has no available menu items.
+                </p>
+            </div>
+
+        {% endif %}
+
+
+        <!-- BACK TO RESTAURANTS -->
+        <a
+            href="{% url 'customer_home' username=username %}"
+            class="back-btn"
+        >
+            ← Back to Restaurants
+        </a>
+
+    </div>
+    <!-- END MAIN CONTAINER -->
+
+
+    <!-- MENU SEARCH SCRIPT -->
+    <script>
+        (function () {
+
+            const searchInput =
+                document.getElementById("menuSearchInput");
+
+            if (!searchInput) {
+                return;
+            }
+
+            const categories =
+                document.querySelectorAll(".category");
+
+            const noResults =
+                document.getElementById("noSearchResults");
+
+
+            function applySearch() {
+
+                const query =
+                    searchInput.value.trim().toLowerCase();
+
+                let totalVisible = 0;
+
+
+                categories.forEach(function (category) {
+
+                    const categoryItems =
+                        category.querySelectorAll(".item-card");
+
+                    let visibleInCategory = 0;
+
+
+                    categoryItems.forEach(function (item) {
+
+                        const name =
+                            item.getAttribute("data-item-name") || "";
+
+                        const matches =
+                            query === "" || name.includes(query);
+
+                        item.style.display =
+                            matches ? "" : "none";
+
+
+                        if (matches) {
+                            visibleInCategory++;
+                            totalVisible++;
+                        }
+
+                    });
+
+
+                    category.style.display =
+                        visibleInCategory > 0 ? "" : "none";
+
+                });
+
+
+                if (noResults) {
+
+                    noResults.style.display =
+                        totalVisible === 0 ? "block" : "none";
+
+                }
+
+            }
+
+
+            searchInput.addEventListener(
+                "input",
+                applySearch
+            );
+
+        })();
+    </script>
+
+
+    <!-- AUTO-HIDE CART NOTIFICATION -->
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const notification =
+                    document.querySelector(".message-container");
+
+                if (!notification) {
+                    return;
+                }
+
+                setTimeout(function () {
+
+                    notification.style.transition =
+                        "opacity 0.3s ease";
+
+                    notification.style.opacity = "0";
+
+
+                    setTimeout(function () {
+                        notification.remove();
+                    }, 300);
+
+                }, 3000);
+
+            }
+        );
+    </script>
+
+</body>
+</html>

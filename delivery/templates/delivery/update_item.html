@@ -1,0 +1,250 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit {{ item.name }} - {{ restaurant.name }}</title>
+
+    <link rel="stylesheet"
+          href="{% static 'delivery/update_item.css' %}">
+
+</head>
+
+<body>
+
+    <div class="edit-container">
+
+        <!-- Back to Menu -->
+
+        <a class="back-link"
+           href="{% url 'open_update_menu' restaurant.id %}">
+            &larr; Back to menu
+        </a>
+
+
+        <!-- Page Header -->
+
+        <div class="page-header">
+
+            <h1>Edit Menu Item</h1>
+
+            <p>
+                Update
+                <strong>{{ item.name }}</strong>
+                for
+                <strong>{{ restaurant.name }}</strong>
+            </p>
+
+        </div>
+
+
+        <!-- Error -->
+
+        {% if error %}
+
+            <div class="error">
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <!-- Edit Form -->
+
+        <form
+            action="{% url 'update_item' restaurant.id item.id %}"
+            method="post">
+
+            {% csrf_token %}
+
+
+            <!-- Item Name -->
+
+            <div class="form-group">
+
+                <label for="name">
+                    Item Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    maxlength="50"
+                    value="{{ item.name }}"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Description -->
+
+            <div class="form-group">
+
+                <label for="description">
+                    Description
+                </label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    maxlength="200"
+                    required>{{ item.description }}</textarea>
+
+            </div>
+
+
+            <!-- Price -->
+
+            <div class="form-group">
+
+                <label for="price">
+                    Price (&#8377;)
+                </label>
+
+                <input
+                    type="number"
+                    id="price"
+                    name="price"
+                    step="0.01"
+                    min="0.01"
+                    value="{{ item.price }}"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Category -->
+
+            <div class="form-group">
+
+                <label for="category">
+                    Category
+                </label>
+
+                <select
+                    id="category"
+                    name="category">
+
+                    <option
+                        value="starter"
+                        {% if item.category == 'starter' %}selected{% endif %}>
+                        Starter
+                    </option>
+
+                    <option
+                        value="main"
+                        {% if item.category == 'main' %}selected{% endif %}>
+                        Main Course
+                    </option>
+
+                    <option
+                        value="dessert"
+                        {% if item.category == 'dessert' %}selected{% endif %}>
+                        Dessert
+                    </option>
+
+                    <option
+                        value="beverage"
+                        {% if item.category == 'beverage' %}selected{% endif %}>
+                        Beverage
+                    </option>
+
+                    <option
+                        value="other"
+                        {% if item.category == 'other' %}selected{% endif %}>
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Image URL -->
+
+            <div class="form-group">
+
+                <label for="picture">
+                    Image URL
+                </label>
+
+                <input
+                    type="url"
+                    id="picture"
+                    name="picture"
+                    value="{{ item.picture }}"
+                >
+
+            </div>
+
+
+            <!-- Vegetarian -->
+
+            <div class="checkbox-row">
+
+                <input
+                    type="checkbox"
+                    id="vegetarian"
+                    name="vegetarian"
+                    {% if item.vegetarian %}checked{% endif %}
+                >
+
+                <label for="vegetarian">
+                    Vegetarian
+                </label>
+
+            </div>
+
+
+            <!-- Available -->
+
+            <div class="checkbox-row">
+
+                <input
+                    type="checkbox"
+                    id="available"
+                    name="available"
+                    {% if item.available %}checked{% endif %}
+                >
+
+                <label for="available">
+                    Available (in stock)
+                </label>
+
+            </div>
+
+
+            <!-- Buttons -->
+
+            <div class="button-row">
+
+                <a
+                    class="cancel-btn"
+                    href="{% url 'open_update_menu' restaurant.id %}">
+                    Cancel
+                </a>
+
+                <button type="submit">
+                    Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>
+

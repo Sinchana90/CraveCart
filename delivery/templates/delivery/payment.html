@@ -1,0 +1,445 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Payment | CraveCart</title>
+
+    <link rel="stylesheet"
+          href="{% static 'delivery/checkout.css' %}?v=5">
+
+    <link rel="stylesheet"
+          href="{% static 'delivery/payment.css' %}?v=6">
+
+    <!-- Razorpay Checkout -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        Crave<span>Cart</span>
+    </div>
+
+    <a href="{% url 'checkout' %}" class="back-btn">
+        ← Back to Checkout
+    </a>
+
+</nav>
+
+
+<main class="container">
+
+    <!-- PROGRESS -->
+
+    <div class="checkout-progress">
+
+        <span class="progress-step completed">
+            ✓ Cart
+        </span>
+
+        <span class="progress-line"></span>
+
+        <span class="progress-step completed">
+            ✓ Address
+        </span>
+
+        <span class="progress-line"></span>
+
+        <span class="progress-step active">
+            3 Payment
+        </span>
+
+    </div>
+
+
+    <div class="page-heading">
+
+        <h1>Complete Your Order</h1>
+
+        <p class="subtitle">
+            Choose your payment method and confirm your order.
+        </p>
+
+    </div>
+
+
+    <div class="payment-layout">
+
+
+        <!-- LEFT COLUMN -->
+
+        <div class="payment-left">
+
+
+            <!-- DELIVERY ADDRESS -->
+
+            <section class="payment-card">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            DELIVERY DETAILS
+                        </span>
+
+                        <h2>
+                            Delivering To
+                        </h2>
+
+                    </div>
+
+                    <a href="{% url 'checkout' %}"
+                       class="change-link">
+                        Change
+                    </a>
+
+                </div>
+
+
+                <div class="address-details">
+
+                    <span class="address-icon">
+                        ⌖
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            {{ selected_address.get_label_display }}
+                        </h3>
+
+                        <p>
+                            {{ selected_address.address }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PAYMENT METHOD -->
+
+            <section class="payment-card">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            STEP 02
+                        </span>
+
+                        <h2>
+                            Payment Method
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <!-- COD -->
+
+                <label class="payment-option">
+
+                    <input
+                        type="radio"
+                        name="payment_method"
+                        value="COD"
+                        form="order-form"
+                        checked
+                    >
+
+                    <span class="payment-icon">
+                        ₹
+                    </span>
+
+                    <span class="payment-info">
+
+                        <strong>
+                            Cash on Delivery
+                        </strong>
+
+                        <small>
+                            Pay when your food arrives.
+                        </small>
+
+                    </span>
+
+                    <span class="available-tag">
+                        Available
+                    </span>
+
+                </label>
+
+
+                <!-- RAZORPAY -->
+
+                <label class="payment-option">
+
+                    <input
+                        type="radio"
+                        name="payment_method"
+                        value="RAZORPAY"
+                        form="order-form"
+                        id="razorpay-option"
+                    >
+
+                    <span class="payment-icon">
+                        💳
+                    </span>
+
+                    <span class="payment-info">
+
+                        <strong>
+                            Pay Online
+                        </strong>
+
+                        <small>
+                            Pay securely using Razorpay.
+                        </small>
+
+                    </span>
+
+                    <span class="available-tag">
+                        Available
+                    </span>
+
+                </label>
+
+
+                <p class="payment-note">
+                    Choose Cash on Delivery or secure online payment.
+                </p>
+
+            </section>
+
+
+            <div class="delivery-note">
+
+                ✦ Your order will be prepared after confirmation.
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT COLUMN -->
+
+        <aside class="order-summary">
+
+            <span class="section-label">
+                YOUR CART
+            </span>
+
+            <h2>
+                Order Summary
+            </h2>
+
+            <p class="summary-subtitle">
+                One last look before placing your order.
+            </p>
+
+
+            {% for cart_item in cart_items %}
+
+                <div class="summary-item">
+
+                    <div class="item-image">
+
+                        <img
+                            src="{{ cart_item.item.picture }}"
+                            alt="{{ cart_item.item.name }}"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+
+                    <div class="item-info">
+
+                        <h3>
+                            {{ cart_item.item.name }}
+                        </h3>
+
+                        <p>
+                            ₹{{ cart_item.item.price }}
+                            × {{ cart_item.quantity }}
+                        </p>
+
+                    </div>
+
+
+                    <span class="item-price">
+
+                        ₹{{ cart_item.subtotal }}
+
+                    </span>
+
+                </div>
+
+            {% endfor %}
+
+
+            <div class="summary-divider"></div>
+
+
+            <div class="summary-total">
+
+                <span>
+                    Total Amount
+                </span>
+
+                <strong>
+                    ₹{{ total }}
+                </strong>
+
+            </div>
+
+
+            <!-- PLACE ORDER FORM -->
+
+            <form
+                method="POST"
+                action="{% url 'place_order' %}"
+                id="order-form"
+            >
+
+                {% csrf_token %}
+
+                <input
+                    type="hidden"
+                    name="payment_method"
+                    id="selected-payment-method"
+                    value="COD"
+                >
+
+                <button
+                    type="submit"
+                    class="place-order-btn"
+                    id="place-order-btn"
+                >
+                    Place Order
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <p class="secure-note" id="secure-note">
+
+                Secure checkout · Cash on Delivery
+
+            </p>
+
+        </aside>
+
+    </div>
+
+</main>
+
+<script>
+    const paymentOptions = document.querySelectorAll('input[name="payment_method"]');
+    const selectedPaymentMethod = document.getElementById('selected-payment-method');
+    const secureNote = document.getElementById('secure-note');
+    const orderForm = document.getElementById('order-form');
+
+    // Handle selection UI
+    paymentOptions.forEach(function(option) {
+        option.addEventListener('change', function() {
+            selectedPaymentMethod.value = this.value;
+            if (this.value === 'RAZORPAY') {
+                secureNote.textContent = 'Secure checkout · Powered by Razorpay';
+            } else {
+                secureNote.textContent = 'Secure checkout · Cash on Delivery';
+            }
+        });
+    });
+
+    // Handle form submit
+    orderForm.addEventListener('submit', function(event) {
+        const selectedMethod = selectedPaymentMethod.value;
+
+        // Cash on Delivery
+        if (selectedMethod === 'COD') {
+            return; // Allow standard POST request
+        }
+
+        // Razorpay Online Payment
+        if (selectedMethod === 'RAZORPAY') {
+            event.preventDefault();
+
+            const options = {
+                key: "{{ razorpay_key_id }}",
+                amount: "{{ razorpay_amount }}",
+                currency: "INR",
+                name: "CraveCart",
+                description: "CraveCart Food Order",
+                
+                // Prevents Razorpay from scanning local missing image paths
+                image: "https://cdn.razorpay.com/static/assets/logo/rzp.png", 
+                
+                order_id: "{{ razorpay_order_id }}",
+
+                handler: function(response) {
+                    // Create and append Razorpay Payment ID
+                    const paymentId = document.createElement('input');
+                    paymentId.type = 'hidden';
+                    paymentId.name = 'razorpay_payment_id';
+                    paymentId.value = response.razorpay_payment_id;
+
+                    // Create and append Razorpay Order ID
+                    const razorpayOrderId = document.createElement('input');
+                    razorpayOrderId.type = 'hidden';
+                    razorpayOrderId.name = 'razorpay_order_id';
+                    razorpayOrderId.value = response.razorpay_order_id;
+
+                    // Create and append Razorpay Signature
+                    const signature = document.createElement('input');
+                    signature.type = 'hidden';
+                    signature.name = 'razorpay_signature';
+                    signature.value = response.razorpay_signature;
+
+                    orderForm.appendChild(paymentId);
+                    orderForm.appendChild(razorpayOrderId);
+                    orderForm.appendChild(signature);
+
+                    // Submit form to Django backend
+                    orderForm.submit();
+                },
+
+                prefill: {
+                    name: "{{ request.user.username }}",
+                    email: "{{ request.user.email }}"
+                },
+
+                theme: {
+                    color: "#3A342B"
+                }
+            };
+
+            const razorpay = new Razorpay(options);
+            razorpay.open();
+        }
+    });
+</script>
+
+</body>
+
+</html>
+

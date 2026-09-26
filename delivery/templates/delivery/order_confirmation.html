@@ -1,0 +1,163 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | CraveCart</title>
+
+    <link rel="stylesheet" href="{% static 'delivery/checkout.css' %}?v=5">
+    <link rel="stylesheet" href="{% static 'delivery/order_confirmation.css' %}?v=6">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">Crave<span>Cart</span></div>
+
+    <a href="{% url 'customer_home' username=username %}" class="back-btn">
+        Back to Home
+    </a>
+</nav>
+
+<main class="container">
+
+    <!-- DJANGO SUCCESS / ERROR MESSAGE -->
+
+    {% if messages %}
+        <div class="message-container">
+            {% for message in messages %}
+                <div class="success-message">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+    <!-- PROGRESS -->
+    <div class="checkout-progress">
+        <span class="progress-step completed">✓ Cart</span>
+        <span class="progress-line"></span>
+        <span class="progress-step completed">✓ Address</span>
+        <span class="progress-line"></span>
+        <span class="progress-step completed">✓ Payment</span>
+    </div>
+
+    <!-- SUCCESS MESSAGE -->
+    <section class="success-card">
+
+        <div class="success-icon">✓</div>
+
+        <span class="success-label">ORDER CONFIRMED</span>
+
+        <h1>Order Placed Successfully!</h1>
+
+        <p>
+            Thank you for ordering with CraveCart.
+            Your delicious food is on its way to being prepared.
+        </p>
+
+        <div class="order-number">
+            Order #{{ order.id }}
+        </div>
+
+        <div class="order-status">
+            <span class="status-dot"></span>
+            {{ order.get_status_display }}
+        </div>
+
+    </section>
+
+    <!-- ORDER DETAILS -->
+    <div class="confirmation-layout">
+
+        <section class="details-card">
+
+            <span class="section-label">YOUR ORDER</span>
+            <h2>Order Details</h2>
+
+            <p class="restaurant-name">
+                {{ order.restaurant.name }}
+            </p>
+
+            <div class="ordered-items">
+
+                {% for order_item in order_items %}
+
+                    <div class="ordered-item">
+
+                        <div class="ordered-item-info">
+                            <h3>{{ order_item.item_name }}</h3>
+
+                            <p>
+                                ₹{{ order_item.price }}
+                                × {{ order_item.quantity }}
+                            </p>
+                        </div>
+
+                        <span class="ordered-item-price">
+                            ₹{{ order_item.total_price }}
+                        </span>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+            <div class="order-total">
+                <span>Total Paid / Payable</span>
+                <strong>₹{{ order.total_amount }}</strong>
+            </div>
+
+        </section>
+
+        <!-- DELIVERY AND PAYMENT -->
+        <section class="details-card">
+
+            <span class="section-label">DELIVERY INFORMATION</span>
+            <h2>Delivery & Payment</h2>
+
+            <div class="detail-block">
+                <span class="detail-icon">⌖</span>
+
+                <div>
+                    <h3>Delivery Address</h3>
+                    <p>{{ order.delivery_address }}</p>
+                </div>
+            </div>
+
+            <div class="detail-block">
+                <span class="detail-icon">₹</span>
+
+                <div>
+                    <h3>Payment Method</h3>
+                    <p>{{ order.get_payment_method_display }}</p>
+                </div>
+            </div>
+
+            <div class="detail-block">
+                <span class="detail-icon">◷</span>
+
+                <div>
+                    <h3>Order Date</h3>
+                    <p>{{ order.created_at|date:"d M Y, h:i A" }}</p>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <div class="confirmation-actions">
+        <a href="{% url 'customer_home' username=username %}"
+           class="continue-shopping-btn">
+            Continue Shopping →
+        </a>
+    </div>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CraveCart - Sign In</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'delivery/signin.css' %}">
+</head>
+
+<body>
+
+    <div class="bg-panel"></div>
+
+    <div class="card-stack">
+
+        <!-- Photo Card -->
+        <div class="photo-card">
+
+            <img src="{% static 'delivery/images/signin-food.jpg' %}" alt="Delicious food">
+
+            <div class="photo-card-overlay">
+
+                <h2>Good Food.<br>Good Mood.</h2>
+
+                <p>
+                    Discover delicious food from your favorite
+                    restaurants and get it delivered to your doorstep.
+                </p>
+
+                <div class="dots">
+                    <span class="active"></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Form Card -->
+        <div class="form-card">
+
+            <h1>Welcome Back!</h1>
+            <p class="subtitle">Sign in to continue to CraveCart</p>
+
+            {% if error %}
+                <div class="error-message" id="errorMessage">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="success-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form action="{% url 'signin' %}" method="post">
+
+                {% csrf_token %}
+
+                <div class="field">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="Enter your email address" value="{{ email|default:'' }}"required>
+                </div>
+
+                <div class="field">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="signin-btn">
+                    Sign In
+                </button>
+
+                <a href="{% url 'forgot_password' %}" class="forgot-password">
+                   Forgot Password?
+                </a>
+
+            </form>
+
+            <p class="signup-text">
+                Don't have an account?
+                <a href="{% url 'open_signup' %}">Create Account</a>
+            </p>
+
+        </div>
+
+    </div>
+
+    <script>
+
+    /* Error message */
+    setTimeout(function () {
+
+        const errorMessage =
+            document.getElementById("errorMessage");
+
+        if (errorMessage) {
+
+            errorMessage.classList.add("hide");
+
+            setTimeout(function () {
+                errorMessage.remove();
+            }, 500);
+        }
+
+    }, 3000);
+
+
+    /* Success message */
+    setTimeout(function () {
+
+        const successMessage =
+            document.querySelector(".success-message");
+
+        if (successMessage) {
+
+            successMessage.classList.add("hide");
+
+            setTimeout(function () {
+                successMessage.remove();
+            }, 500);
+        }
+
+    }, 4000);
+
+</script>
+
+</body>
+</html>

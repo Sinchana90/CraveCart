@@ -1,0 +1,276 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Track Order - CraveCart</title>
+
+    <link rel="stylesheet" href="{% static 'delivery/order_tracking.css' %}">
+</head>
+
+<body>
+
+    <div class="tracking-container">
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <a href="{% url 'my_orders' username %}" class="back-link">
+                ← Back to My Orders
+            </a>
+
+            <h1>Track Your Order</h1>
+
+            <p>
+                Order #{{ order.id }}
+            </p>
+
+        </div>
+
+
+        <!-- ORDER SUMMARY -->
+
+        <div class="order-summary">
+
+            <div class="summary-left">
+
+                <span class="summary-label">
+                    Restaurant
+                </span>
+
+                <h2>
+                    {{ order.restaurant.name }}
+                </h2>
+
+            </div>
+
+            <div class="summary-right">
+
+                <span class="summary-label">
+                    Total
+                </span>
+
+                <strong>
+                    ₹{{ order.total_amount }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- CURRENT STATUS -->
+
+        <div class="current-status-card">
+
+            <span class="current-status-label">
+                Current Status
+            </span>
+
+            <h2>
+                {{ order.get_status_display }}
+            </h2>
+
+            {% if order.status == 'placed' %}
+
+                <p>
+                    Your order has been placed and is waiting for restaurant confirmation.
+                </p>
+
+            {% elif order.status == 'confirmed' %}
+
+                <p>
+                    The restaurant has confirmed your order.
+                </p>
+
+            {% elif order.status == 'preparing' %}
+
+                <p>
+                    Your delicious food is being prepared.
+                </p>
+
+            {% elif order.status == 'out_for_delivery' %}
+
+                <p>
+                    Your order is on the way to you.
+                </p>
+
+            {% elif order.status == 'delivered' %}
+
+                <p>
+                    Your order has been delivered successfully.
+                </p>
+
+            {% elif order.status == 'cancelled' %}
+
+                <p>
+                    This order has been cancelled.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- TRACKING TIMELINE -->
+
+        <div class="tracking-card">
+
+            <h2 class="tracking-title">
+                Order Progress
+            </h2>
+
+            <div class="timeline">
+
+                {% for step in tracking_steps %}
+
+                    <div class="timeline-step {{ step.class }}">
+
+                        <div class="timeline-left">
+
+                            <div class="status-circle">
+
+                                {% if step.class == 'completed' %}
+                                    ✓
+
+                                {% elif step.class == 'current' %}
+                                    ●
+
+                                {% elif step.class == 'cancelled-step' %}
+                                    !
+
+                                {% else %}
+                                    {{ forloop.counter }}
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="timeline-content">
+
+                            <h3>
+                                {{ step.title }}
+                            </h3>
+
+                            <p>
+                                {{ step.description }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+
+                {% if order.status == 'cancelled' %}
+
+                    <div class="timeline-step cancelled">
+
+                        <div class="timeline-left">
+
+                            <div class="status-circle">
+                                !
+                            </div>
+
+                        </div>
+
+                        <div class="timeline-content">
+
+                            <h3>
+                                Order Cancelled
+                            </h3>
+
+                            <p>
+                                This order will not be delivered.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDER DETAILS -->
+
+        <div class="details-card">
+
+            <h2>
+                Order Details
+            </h2>
+
+            <div class="details-grid">
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Order Date
+                    </span>
+
+                    <span class="detail-value">
+                        {{ order.created_at|date:"d M Y, h:i A" }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Payment Method
+                    </span>
+
+                    <span class="detail-value">
+                        {{ order.get_payment_method_display }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Payment Status
+                    </span>
+
+                    <span class="detail-value payment-status">
+                        {{ order.payment_status }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box address-box">
+
+                    <span class="detail-label">
+                        Delivery Address
+                    </span>
+
+                    <span class="detail-value">
+                        {{ order.delivery_address }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Favorites - CraveCart</title>
+
+    <link rel="stylesheet"
+          href="{% static 'delivery/favorites.css' %}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="topnav">
+
+        <div class="brand">
+            CraveCart
+        </div>
+
+        <div class="links">
+
+            <a href="javascript:history.back()">
+                Restaurants
+            </a>
+
+            <a href="#">
+                Orders
+            </a>
+
+            <a href="{% url 'show_cart' username %}">
+                Cart
+            </a>
+
+            <a href="{% url 'show_favorites' username %}"
+               class="active">
+                Favorites
+            </a>
+
+        </div>
+
+        <div class="profile">
+
+            <span class="avatar">
+                {{ username|slice:":1"|upper }}
+            </span>
+
+            <a href="{% url 'logout' %}" class="logout-link">
+                Log out
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN -->
+    <div class="page">
+
+        <h1>My Favorites</h1>
+
+        <p class="welcome">
+            Restaurants you have saved
+        </p>
+
+
+        {% if favoriteList %}
+
+            <div class="restaurant-grid">
+
+                {% for favorite in favoriteList %}
+
+                    <div class="restaurant-card">
+
+                        <div class="restaurant-image">
+
+                            <img src="{{ favorite.restaurant.picture }}"
+                                 alt="{{ favorite.restaurant.name }}">
+
+                            <a href="{% url 'remove_from_favorites' favorite.restaurant.id username %}"
+                               class="remove-favorite">
+                                ♥
+                            </a>
+
+                        </div>
+
+
+                        <div class="restaurant-content">
+
+                            <h2>
+                                {{ favorite.restaurant.name }}
+                            </h2>
+
+                            <p class="cuisine">
+                                {{ favorite.restaurant.cuisine }}
+                            </p>
+
+                            <p class="rating">
+                                ⭐ {{ favorite.restaurant.rating }}
+                            </p>
+
+                            <a href="{% url 'view_menu' favorite.restaurant.id username %}"
+                               class="view-menu">
+                                View Menu
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-favorites">
+
+                <div class="heart">
+                    ♡
+                </div>
+
+                <h2>
+                    No favorites yet
+                </h2>
+
+                <p>
+                    Save your favorite restaurants and find them here.
+                </p>
+
+                <a href="javascript:history.back()" class="browse-btn">
+                    Browse Restaurants
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>

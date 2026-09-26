@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'delivery/update_menu.css' %}">
+<title>Manage Menu - {{ restaurant.name }}</title>
+</head>
+<body>
+
+<div class="menu-container">
+
+    <a class="back-link" href="{% url 'open_show_restaurants' %}">&larr; Back to restaurants</a>
+
+    <!-- HERO HEADER -->
+    <div class="page-header">
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <div class="header-icon">
+                <svg viewBox="0 0 24 24"><path d="M4 4v16M4 4c4 0 4 4 0 4M20 4v16M20 4c-3 0-4 2-4 6v10"/></svg>
+            </div>
+            <div>
+                <h1>Menu management</h1>
+                <p>Manage menu items for <strong>{{ restaurant.name }}</strong></p>
+            </div>
+        </div>
+    </div>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <!-- CURRENT MENU -->
+    <div class="section-header">
+        <h2>Current menu</h2>
+        <span class="restaurant-name">{{ restaurant.name }}</span>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Picture</th>
+                    <th>Item name</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for item in itemList %}
+
+                <tr class="{% if not item.available %}unavailable{% endif %}">
+
+                    <td>
+                        <img src="{{ item.picture }}" alt="{{ item.name }}" class="food-image">
+                    </td>
+
+                    <td><strong class="item-name">{{ item.name }}</strong></td>
+
+                    <td>{{ item.get_category_display }}</td>
+
+                    <td class="description">{{ item.description }}</td>
+
+                    <td><span class="price">&#8377;{{ item.price }}</span></td>
+
+                    <td>
+                        {% if item.vegetarian %}
+                            <span class="badge veg">Veg</span>
+                        {% else %}
+                            <span class="badge nonveg">Non-veg</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if item.available %}
+                            <span class="status available">In stock</span>
+                        {% else %}
+                            <span class="badge out">Sold out</span>
+                        {% endif %}
+                    </td>
+
+                    <td class="actions">
+                        <a class="edit" href="{% url 'open_update_item' restaurant.id item.id %}">Edit</a>
+                        <a class="delete" href="{% url 'delete_item' restaurant.id item.id %}"
+                           onclick="return confirm('Remove {{ item.name }} from the menu?');">Delete</a>
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="8" class="empty-message">No items on this menu yet. Add one below.</td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+
+    <!-- ADD MENU ITEM -->
+    <div class="add-section">
+        <h2>Add menu item</h2>
+        <p class="section-description">Add a new food item to {{ restaurant.name }}'s menu.</p>
+
+        <form class="add-item" action="{% url 'update_menu' restaurant.id %}" method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="name">Item name</label>
+                <input type="text" id="name" name="name" maxlength="50" placeholder="Enter item name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" maxlength="200" placeholder="Enter item description" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price (&#8377;)</label>
+                <input type="number" id="price" name="price" step="0.01" min="0.01" placeholder="Enter price" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category">
+                    <option value="starter">Starter</option>
+                    <option value="main" selected>Main course</option>
+                    <option value="dessert">Dessert</option>
+                    <option value="beverage">Beverage</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="picture">Image URL</label>
+                <input type="url" id="picture" name="picture" placeholder="https://example.com/image.jpg">
+            </div>
+
+            <div class="checkbox-row">
+                <input type="checkbox" id="vegetarian" name="vegetarian">
+                <label for="vegetarian">Vegetarian</label>
+            </div>
+
+            <div class="checkbox-row">
+                <input type="checkbox" id="available" name="available" checked>
+                <label for="available">Available (in stock)</label>
+            </div>
+
+            <button type="submit">Add item</button>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

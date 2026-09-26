@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Verify OTP - CraveCart</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'delivery/verify_reset_otp.css' %}"
+    >
+</head>
+
+<body>
+
+    <div class="otp-container">
+
+        <div class="logo">
+            Crave<span>Cart</span>
+        </div>
+
+        <div class="otp-icon">
+            ✉
+        </div>
+
+        <h1>
+            Verify OTP
+        </h1>
+
+        <p class="description">
+            Enter the 6-digit OTP sent to your registered email address.
+        </p>
+
+        {% if error %}
+            <div class="error-message">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="success-message">
+                    {{ message }}
+                 </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <input
+                type="text"
+                name="otp"
+                class="otp-input"
+                placeholder="••••••"
+                maxlength="6"
+                minlength="6"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                required
+            >
+
+            <button
+                type="submit"
+                class="verify-btn"
+            >
+                Verify OTP
+            </button>
+
+        </form>
+
+        <a
+            href="{% url 'forgot_password' %}"
+            class="back-link"
+        >
+            ← Back to Forgot Password
+        </a>
+
+    </div>
+
+</body>
+
+</html>

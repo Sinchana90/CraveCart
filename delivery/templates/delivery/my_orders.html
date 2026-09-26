@@ -1,0 +1,127 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders - CraveCart</title>
+
+    <link rel="stylesheet" href="{% static 'delivery/my_orders.css' %}">
+</head>
+
+<body>
+
+    <div class="orders-container">
+
+        <div class="page-header">
+             <a href="{% url 'customer_home' username %}"
+                class="home-btn">
+                ← Customer Home
+            </a>
+            <h1>My Orders</h1>
+            <p>View your order history and current order status.</p>
+        </div>
+
+        {% if orders %}
+
+            {% for order in orders %}
+
+                <div class="order-card">
+
+                    <div class="order-header">
+
+                        <div class="order-info">
+                            <h2>Order #{{ order.id }}</h2>
+                            <p class="restaurant-name">
+                                {{ order.restaurant.name }}
+                            </p>
+                        </div>
+
+                        <div class="order-status">
+                            {{ order.get_status_display }}
+                        </div>
+
+                    </div>
+
+                    <div class="order-details">
+
+                        <div class="detail-box">
+                            <span class="label">Total Amount</span>
+                            <span class="value">
+                                ₹{{ order.total_amount }}
+                            </span>
+                        </div>
+
+                        <div class="detail-box">
+                            <span class="label">Payment Method</span>
+                            <span class="value">
+                                {{ order.get_payment_method_display }}
+                            </span>
+                        </div>
+
+                        <div class="detail-box">
+                            <span class="label">Payment Status</span>
+                            <span class="value payment-status">
+                                {{ order.payment_status }}
+                            </span>
+                        </div>
+
+                        <div class="detail-box">
+                            <span class="label">Order Date</span>
+                            <span class="value">
+                                {{ order.created_at|date:"d M Y, h:i A" }}
+                            </span>
+                        </div>
+
+                        <div class="detail-box address-box">
+                            <span class="label">Delivery Address</span>
+                            <span class="value">
+                                {{ order.delivery_address }}
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="order-footer">
+                        <a href="{% url 'order_confirmation' order.id %}"
+                           class="view-order-btn">
+                            View Order
+                        </a>
+
+                         <a href="{% url 'order_tracking' order.id %}"
+                            class="track-order-btn">
+                          Track Order
+                         </a>
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-orders">
+
+                <div class="empty-icon">📦</div>
+
+                <h2>No Orders Yet</h2>
+
+                <p>
+                    You haven't placed any orders yet.
+                </p>
+
+                <a href="{% url 'customer_home' username %}"
+                   class="browse-btn">
+                    Browse Restaurants
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+</html>

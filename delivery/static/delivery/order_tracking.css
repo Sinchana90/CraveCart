@@ -1,0 +1,934 @@
+/* =========================
+   CRAVECART - ORDER TRACKING
+   SHINY GOLD THEME
+   ========================= */
+
+:root {
+    --black: #080808;
+    --black-soft: #111111;
+    --card: #181818;
+
+    --gold-dark: #6f4d12;
+    --gold-deep: #8f6b24;
+    --gold: #c7a24a;
+    --gold-light: #f3d27a;
+    --gold-bright: #ffe8a8;
+    --gold-white: #fff4c7;
+
+    --cream: #e8ddc8;
+
+    --text: #f0e8d9;
+    --text-soft: #aaa298;
+    --text-faint: #716a60;
+
+    --line: #3a3329;
+}
+
+
+/* =========================
+   RESET
+   ========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   BODY
+   ========================= */
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(243, 210, 122, 0.12),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 0% 100%,
+            rgba(199, 162, 74, 0.06),
+            transparent 30%
+        ),
+        var(--black);
+
+    color: var(--text);
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    padding: 40px 20px;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+   ========================= */
+
+.tracking-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   PAGE HEADER
+   ========================= */
+
+.page-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+
+/* Back button */
+
+.back-link {
+    display: inline-block;
+
+    color: var(--gold-light);
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    margin-bottom: 18px;
+
+    transition:
+        color 0.25s ease,
+        text-shadow 0.25s ease;
+}
+
+.back-link:hover {
+    color: var(--gold-white);
+
+    text-shadow:
+        0 0 8px rgba(243, 210, 122, 0.55);
+}
+
+
+/* Main heading */
+
+.page-header h1 {
+    font-size: 36px;
+    font-weight: 700;
+
+    background:
+        linear-gradient(
+            110deg,
+            #8f6b24 0%,
+            #c7a24a 22%,
+            #fff4c7 43%,
+            #f3d27a 55%,
+            #c7a24a 75%,
+            #8f6b24 100%
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    background-size: 220% auto;
+
+    animation: goldTextShine 4s linear infinite;
+
+    text-shadow: none;
+}
+
+
+.page-header p {
+    color: var(--text-soft);
+
+    font-size: 15px;
+
+    margin-top: 8px;
+}
+
+
+/* =========================
+   GOLD TEXT ANIMATION
+   ========================= */
+
+@keyframes goldTextShine {
+
+    0% {
+        background-position: 200% center;
+    }
+
+    100% {
+        background-position: -20% center;
+    }
+}
+
+
+/* =========================
+   COMMON GOLD BORDER
+   ========================= */
+
+.gold-border {
+    border: 1px solid var(--gold-dark);
+}
+
+
+/* =========================
+   ORDER SUMMARY
+   ========================= */
+
+.order-summary {
+    position: relative;
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 23px;
+
+    margin-bottom: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.025),
+            rgba(199, 162, 74, 0.035),
+            rgba(0, 0, 0, 0.12)
+        ),
+        var(--card);
+
+    border: 1px solid var(--gold-dark);
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 244, 199, 0.08);
+
+    overflow: hidden;
+}
+
+
+/* Shiny sweep */
+
+.order-summary::before {
+    content: "";
+
+    position: absolute;
+
+    top: -100%;
+    left: -30%;
+
+    width: 25%;
+    height: 300%;
+
+    transform: rotate(25deg);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 244, 199, 0.16),
+            transparent
+        );
+
+    animation: goldSweep 5s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+
+@keyframes goldSweep {
+
+    0% {
+        left: -30%;
+    }
+
+    45%,
+    100% {
+        left: 120%;
+    }
+}
+
+
+.summary-label {
+    display: block;
+
+    color: var(--text-faint);
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 8px;
+}
+
+
+.summary-left h2 {
+    font-size: 21px;
+
+    background:
+        linear-gradient(
+            100deg,
+            var(--gold),
+            var(--gold-bright),
+            var(--gold-light),
+            var(--gold)
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    background-size: 180% auto;
+
+    animation: goldTextShine 5s linear infinite;
+}
+
+
+.summary-right {
+    text-align: right;
+}
+
+
+.summary-right strong {
+    font-size: 24px;
+
+    background:
+        linear-gradient(
+            100deg,
+            #8f6b24,
+            #f3d27a,
+            #fff4c7,
+            #c7a24a
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    background-size: 200% auto;
+
+    animation: goldTextShine 4s linear infinite;
+}
+
+
+/* =========================
+   CURRENT STATUS CARD
+   ========================= */
+
+.current-status-card {
+    position: relative;
+
+    padding: 28px;
+
+    margin-bottom: 20px;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(199, 162, 74, 0.12),
+            rgba(199, 162, 74, 0.035) 35%,
+            rgba(0, 0, 0, 0.15)
+        ),
+        var(--card);
+
+    border: 1px solid var(--gold);
+
+    box-shadow:
+        0 0 0 1px rgba(199, 162, 74, 0.05),
+        0 12px 35px rgba(0, 0, 0, 0.45),
+        0 0 25px rgba(199, 162, 74, 0.06),
+        inset 0 1px 0 rgba(255, 244, 199, 0.1);
+
+    overflow: hidden;
+}
+
+
+/* Light across the card */
+
+.current-status-card::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+    height: 100%;
+
+    transform: skewX(-25deg);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 244, 199, 0.08),
+            transparent
+        );
+
+    animation: statusSweep 5.5s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+
+@keyframes statusSweep {
+
+    0% {
+        left: -120%;
+    }
+
+    35%,
+    100% {
+        left: 150%;
+    }
+}
+
+
+.current-status-label {
+    color: var(--text-soft);
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+
+.current-status-card h2 {
+    margin: 9px 0;
+
+    font-size: 27px;
+
+    background:
+        linear-gradient(
+            100deg,
+            var(--gold-dark),
+            var(--gold),
+            var(--gold-white),
+            var(--gold-light),
+            var(--gold-dark)
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    background-size: 220% auto;
+
+    animation: goldTextShine 4s linear infinite;
+}
+
+
+.current-status-card p {
+    color: var(--text-soft);
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   TRACKING CARD
+   ========================= */
+
+.tracking-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.018),
+            rgba(199, 162, 74, 0.025),
+            transparent
+        ),
+        var(--card);
+
+    border: 1px solid var(--line);
+
+    border-radius: 15px;
+
+    padding: 30px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 10px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 244, 199, 0.035);
+}
+
+
+.tracking-title {
+    font-size: 21px;
+
+    margin-bottom: 28px;
+
+    color: var(--gold-light);
+
+    text-shadow:
+        0 0 12px rgba(243, 210, 122, 0.15);
+}
+
+
+/* =========================
+   TIMELINE
+   ========================= */
+
+.timeline {
+    position: relative;
+}
+
+
+/* Base timeline */
+
+.timeline::before {
+    content: "";
+
+    position: absolute;
+
+    left: 20px;
+
+    top: 20px;
+
+    bottom: 20px;
+
+    width: 2px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--gold-dark),
+            var(--line) 55%,
+            var(--line)
+        );
+
+    opacity: 0.7;
+}
+
+
+/* =========================
+   TIMELINE STEP
+   ========================= */
+
+.timeline-step {
+    position: relative;
+
+    display: flex;
+
+    gap: 20px;
+
+    min-height: 95px;
+
+    z-index: 1;
+}
+
+
+.timeline-left {
+    width: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    justify-content: center;
+}
+
+
+/* =========================
+   STATUS CIRCLE
+   ========================= */
+
+.status-circle {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    border: 2px solid var(--line);
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #242424,
+            #0e0e0e
+        );
+
+    color: var(--text-faint);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* =========================
+   COMPLETED
+   ========================= */
+
+.timeline-step.completed .status-circle {
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            var(--gold-white),
+            var(--gold-light) 25%,
+            var(--gold) 58%,
+            var(--gold-dark) 100%
+        );
+
+    border-color: var(--gold-light);
+
+    color: #17120a;
+
+    box-shadow:
+        0 0 0 4px rgba(199, 162, 74, 0.08),
+        0 0 15px rgba(243, 210, 122, 0.2),
+        inset -3px -3px 6px rgba(70, 42, 5, 0.25),
+        inset 2px 2px 5px rgba(255, 244, 199, 0.5);
+}
+
+
+.timeline-step.completed .timeline-content h3 {
+    color: var(--gold-light);
+
+    text-shadow:
+        0 0 10px rgba(243, 210, 122, 0.1);
+}
+
+
+.timeline-step.completed .timeline-content p {
+    color: var(--text-soft);
+}
+
+
+/* =========================
+   CURRENT
+   ========================= */
+
+.timeline-step.current .status-circle {
+    position: relative;
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            var(--gold-white),
+            var(--gold-light) 22%,
+            var(--gold) 55%,
+            var(--gold-deep) 100%
+        );
+
+    border-color: var(--gold-light);
+
+    color: #17120a;
+
+    box-shadow:
+        0 0 0 5px rgba(199, 162, 74, 0.08),
+        0 0 22px rgba(243, 210, 122, 0.32),
+        inset 2px 2px 5px rgba(255, 244, 199, 0.55),
+        inset -3px -3px 6px rgba(60, 35, 3, 0.3);
+
+    animation: currentGlow 2s ease-in-out infinite;
+}
+
+
+@keyframes currentGlow {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 0 5px rgba(199, 162, 74, 0.08),
+            0 0 15px rgba(243, 210, 122, 0.22),
+            inset 2px 2px 5px rgba(255, 244, 199, 0.55),
+            inset -3px -3px 6px rgba(60, 35, 3, 0.3);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 7px rgba(199, 162, 74, 0.08),
+            0 0 26px rgba(243, 210, 122, 0.38),
+            inset 2px 2px 5px rgba(255, 244, 199, 0.6),
+            inset -3px -3px 6px rgba(60, 35, 3, 0.3);
+    }
+}
+
+
+.timeline-step.current .timeline-content h3 {
+    color: var(--gold-bright);
+
+    text-shadow:
+        0 0 12px rgba(243, 210, 122, 0.14);
+}
+
+
+.timeline-step.current .timeline-content p {
+    color: var(--text);
+}
+
+
+/* =========================
+   UPCOMING
+   ========================= */
+
+.timeline-step.upcoming .status-circle {
+    color: var(--text-faint);
+}
+
+
+.timeline-step.upcoming .timeline-content h3 {
+    color: #6f685d;
+}
+
+
+.timeline-step.upcoming .timeline-content p {
+    color: #575149;
+}
+
+
+/* =========================
+   TIMELINE CONTENT
+   ========================= */
+
+.timeline-content {
+    padding-top: 3px;
+}
+
+
+.timeline-content h3 {
+    font-size: 17px;
+
+    margin-bottom: 7px;
+}
+
+
+.timeline-content p {
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================
+   DETAILS CARD
+   ========================= */
+
+.details-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.018),
+            rgba(199, 162, 74, 0.02),
+            transparent
+        ),
+        var(--card);
+
+    border: 1px solid var(--line);
+
+    border-radius: 15px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+
+.details-card h2 {
+    color: var(--gold-light);
+
+    font-size: 20px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   DETAILS GRID
+   ========================= */
+
+.details-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+.detail-box {
+    position: relative;
+
+    padding: 15px;
+
+    background: var(--black-soft);
+
+    border: 1px solid var(--line);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+
+.detail-box::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 2px;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--gold-light),
+            var(--gold-dark)
+        );
+}
+
+
+.detail-label {
+    display: block;
+
+    color: var(--text-faint);
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.7px;
+
+    margin-bottom: 7px;
+}
+
+
+.detail-value {
+    display: block;
+
+    color: var(--text);
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+.payment-status {
+    color: var(--gold-light);
+
+    font-weight: 600;
+
+    text-shadow:
+        0 0 9px rgba(243, 210, 122, 0.12);
+}
+
+
+.address-box {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 650px) {
+
+    body {
+        padding: 25px 15px;
+    }
+
+    .page-header h1 {
+        font-size: 30px;
+    }
+
+    .order-summary {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .summary-right {
+        text-align: left;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .address-box {
+        grid-column: auto;
+    }
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 450px) {
+
+    body {
+        padding: 20px 12px;
+    }
+
+    .page-header h1 {
+        font-size: 27px;
+    }
+
+    .tracking-card,
+    .details-card,
+    .current-status-card,
+    .order-summary {
+        padding: 18px;
+    }
+
+    .current-status-card h2 {
+        font-size: 23px;
+    }
+
+    .timeline-step {
+        gap: 14px;
+    }
+
+    .timeline::before {
+        left: 19px;
+    }
+
+    .status-circle {
+        width: 38px;
+        height: 38px;
+    }
+
+    .timeline-content h3 {
+        font-size: 15px;
+    }
+
+    .timeline-content p {
+        font-size: 13px;
+    }
+}

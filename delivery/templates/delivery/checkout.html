@@ -1,0 +1,199 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | CraveCart</title>
+    <link rel="stylesheet" href="{% static 'delivery/checkout.css' %}?v=5">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Crave<span>Cart</span></div>
+
+        <a href="{% url 'show_cart' username=username %}" class="back-btn">
+            ← Back to Cart
+        </a>
+    </nav>
+
+    <main class="container">
+
+        <!-- CHECKOUT PROGRESS -->
+        <div class="checkout-progress">
+            <span class="progress-step completed">✓ Cart</span>
+            <span class="progress-line"></span>
+            <span class="progress-step active">2 Address</span>
+            <span class="progress-line"></span>
+            <span class="progress-step">3 Payment</span>
+        </div>
+
+        <div class="page-heading">
+            <h1>Checkout</h1>
+            <p class="subtitle">
+                Almost there! Choose your delivery address and review your order.
+            </p>
+        </div>
+
+        <form id="checkout-form"
+              method="POST"
+              action="{% url 'checkout' %}">
+
+            {% csrf_token %}
+
+            <div class="checkout-layout">
+
+                <!-- LEFT: DELIVERY ADDRESS -->
+                <div class="checkout-left">
+
+                    <section class="address-section">
+
+                        <div class="section-heading">
+                            <div>
+                                <span class="section-label">STEP 01</span>
+                                <h2>Delivery Address</h2>
+                            </div>
+                            <span class="section-icon">⌖</span>
+                        </div>
+
+                        <p class="address-subtitle">
+                            Where should we deliver your delicious food?
+                        </p>
+
+                        {% if addresses %}
+
+                            <div class="address-list">
+
+                                {% for address in addresses %}
+
+                                    <label class="address-card">
+
+                                        <input
+                                            type="radio"
+                                            name="delivery_address"
+                                            value="{{ address.id }}"
+                                            required
+                                        >
+
+                                        <div class="address-details">
+                                            <h3>
+                                                {{ address.get_label_display }}
+                                            </h3>
+
+                                            <p>{{ address.address }}</p>
+                                        </div>
+
+                                        <span class="selected-indicator">✓</span>
+
+                                    </label>
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="no-address">
+                                You haven't saved a delivery address yet.
+                                Please add an address from your profile.
+                            </div>
+
+                        {% endif %}
+
+                    </section>
+
+                    <div class="delivery-note">
+                        <span>✦</span>
+                        Your order will be delivered to your selected address.
+                    </div>
+
+                </div>
+
+                <!-- RIGHT: ORDER SUMMARY -->
+                <aside class="checkout-card">
+
+                    <div class="section-heading">
+                        <div>
+                            <span class="section-label">YOUR CART</span>
+                            <h2>Order Summary</h2>
+                        </div>
+                    </div>
+
+                    <p class="summary-subtitle">
+                        Review your items before continuing.
+                    </p>
+
+                    <div class="summary-items">
+
+                        {% for cart_item in cart_items %}
+
+                            <div class="cart-item">
+
+                                <div class="item-image">
+                                    <img
+                                        src="{{ cart_item.item.picture }}"
+                                        alt="{{ cart_item.item.name }}"
+                                        loading="lazy"
+                                    >
+                                </div>
+
+                                <div class="item-info">
+                                    <h3>{{ cart_item.item.name }}</h3>
+
+                                    <p>
+                                        ₹{{ cart_item.item.price }}
+                                        × {{ cart_item.quantity }}
+                                    </p>
+                                </div>
+
+                                <div class="item-price">
+                                    ₹{{ cart_item.subtotal }}
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <div class="total">
+                        <span>Total Amount</span>
+                        <span class="total-price">₹{{ total }}</span>
+                    </div>
+
+                    {% if addresses %}
+
+                        <button type="submit" class="continue-btn">
+                            Continue to Payment
+                            <span>→</span>
+                        </button>
+
+                    {% else %}
+
+                        <button type="button"
+                                class="continue-btn"
+                                disabled>
+                            Add an Address to Continue
+                        </button>
+
+                    {% endif %}
+
+                    <p class="secure-note">
+                        ♧ Secure checkout · Cash on Delivery available
+                    </p>
+
+                </aside>
+
+            </div>
+
+        </form>
+
+    </main>
+
+    
+
+</body>
+</html>

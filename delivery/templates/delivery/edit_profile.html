@@ -1,0 +1,192 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'delivery/customer_home.css' %}">
+
+    <title>Edit Profile - CraveCart</title>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="topnav">
+
+        <a href="{% url 'customer_home' username %}" class="brand">
+
+            <span class="mark">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 4v16M4 4c4 0 4 4 0 4M20 4v16M20 4c-3 0-4 2-4 6v10"/>
+                </svg>
+            </span>
+
+            <span class="crave">Crave</span>
+            <span class="cart">Cart</span>
+
+        </a>
+
+        <nav class="links">
+
+            <a href="{% url 'customer_home' username %}">
+                Restaurants
+            </a>
+
+            <a href="{% url 'show_cart' username %}">
+                Cart
+            </a>
+
+            <a href="{% url 'show_favorites' username %}">
+                Favorites
+            </a>
+
+        </nav>
+
+        <div class="profile">
+
+            <span class="avatar">
+                {{ username|slice:":1"|upper }}
+            </span>
+
+            <a href="{% url 'profile' username %}" class="profile-link">
+                Profile
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- EDIT PROFILE PAGE -->
+
+    <main class="account-page">
+
+        <div class="account-container">
+
+            <div class="account-heading">
+
+                <h1>Edit Profile</h1>
+
+                <p>
+                    Update your CraveCart account details
+                </p>
+
+            </div>
+
+
+            <section class="account-section edit-profile-section">
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <!-- USERNAME -->
+
+                    <div class="edit-field">
+
+                        <label>
+                            Username
+                        </label>
+
+                        <input
+                            type="text"
+                            value="{{ customer.username }}"
+                            readonly
+                        >
+
+                        <small>
+                            Username cannot be changed.
+                        </small>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="edit-field">
+
+                        <label>
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            value="{{ customer.email }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- MOBILE -->
+
+                    <div class="edit-field">
+
+                        <label>
+                            Mobile
+                        </label>
+
+                        <input
+                            type="text"
+                            name="mobile"
+                            value="{{ customer.mobile }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- ADDRESS -->
+
+                    <div class="edit-field">
+
+                        <label>
+                            Address
+                        </label>
+
+                        <textarea
+                            name="address"
+                            rows="3"
+                            required
+                        >{{ customer.address }}</textarea>
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="edit-profile-actions">
+
+                        <a
+                            href="{% url 'profile' username %}"
+                            class="cancel-profile-btn"
+                        >
+                            Cancel
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="save-profile-btn"
+                        >
+                            Save Changes
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

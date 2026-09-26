@@ -1,0 +1,189 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Cart - CraveCart</title>
+
+    <link rel="stylesheet"
+          href="{% static 'delivery/cart.css' %}">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            CraveCart
+        </div>
+
+       {% if cart_items %}
+    <a href="{% url 'view_menu' cart_items.0.item.restaurant.id username %}"
+       class="back-btn">
+        ← Back to Menu
+    </a>
+{% else %}
+    <a href="{% url 'customer_home' username=username %}"
+       class="back-btn">
+        ← Browse Restaurants
+    </a>
+{% endif %}
+
+    </div>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+    <!-- MAIN -->
+
+    <div class="container">
+
+        <h1 class="page-title">
+            My Cart
+        </h1>
+
+        <p class="welcome">
+            Welcome, {{ username }}
+        </p>
+
+
+        {% if cart_items %}
+
+            <div class="cart-box">
+
+                {% for cart_item in cart_items %}
+
+                    <div class="cart-item">
+
+                        <!-- ITEM DETAILS -->
+
+                        <div class="item-info">
+
+                            <div class="item-name">
+                                {{ cart_item.item.name }}
+                            </div>
+
+                            <div class="item-description">
+                                {{ cart_item.item.description }}
+                            </div>
+
+                            <div class="item-price">
+                                ₹{{ cart_item.item.price }}
+                            </div>
+
+                        </div>
+
+
+                        <!-- QUANTITY -->
+
+                        <div class="quantity-section">
+
+                            <a href="{% url 'decrease_quantity' cart_item.id username %}"
+                               class="quantity-btn">
+                                −
+                            </a>
+
+                            <span class="quantity">
+                                {{ cart_item.quantity }}
+                            </span>
+
+                            <a href="{% url 'increase_quantity' cart_item.id username %}"
+                               class="quantity-btn">
+                                +
+                            </a>
+
+                        </div>
+
+
+                        <!-- ITEM TOTAL -->
+
+                        <div class="item-total">
+                            ₹{{ cart_item.total_price }}
+                        </div>
+
+
+                        <!-- REMOVE -->
+
+                        <a href="{% url 'remove_from_cart' cart_item.id username %}"
+                           class="remove-btn">
+                            Remove
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+
+                <!-- CART SUMMARY -->
+
+                <div class="cart-summary">
+
+                    <div class="total-label">
+                        Total
+                    </div>
+
+                    <div class="total-price">
+                        ₹{{ total }}
+                    </div>
+
+                </div>
+
+                <!-- CHECKOUT BUTTON -->
+        </div>
+
+             <a href="{% url 'checkout' %}" class="checkout-btn">
+                Checkout <span>→</span>
+            </a>
+
+        </div>
+        
+            </div>
+
+
+        {% else %}
+
+            <!-- EMPTY CART -->
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🛒
+                </div>
+
+                <h2>
+                    Your cart is empty
+                </h2>
+
+                <p>
+                    Looks like you haven't added anything to your cart yet.
+                </p>
+
+                <a href="javascript:history.back()" class="menu-btn">
+                    Browse Menu
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
