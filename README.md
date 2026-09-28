@@ -101,7 +101,6 @@ Cash on Delivery is implemented. Razorpay online payment is planned/in progress 
 ## Future Improvements
 
 - Complete Razorpay online payment integration and payment verification.
-- Extend order tracking and customer order history.
 - Add automated tests and production deployment configuration.
 
 ## Author
